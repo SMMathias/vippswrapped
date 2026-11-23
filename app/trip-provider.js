@@ -12,6 +12,9 @@ export function TripProvider({ children }) {
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Id på den udgift, der lige er tilføjet. Gruppeskærmen bruger det til at
+  // vise en bekræftelse og lade tingen "lande" på bordet.
+  const [lastAddedId, setLastAddedId] = useState(null);
 
   // Henter turen og lægger svaret i state. State sættes først i callbacks,
   // når svaret er kommet, og ikke direkte i effekten.
@@ -40,7 +43,9 @@ export function TripProvider({ children }) {
   }, [load]);
 
   return (
-    <TripContext.Provider value={{ trip, loading, error, reload }}>
+    <TripContext.Provider
+      value={{ trip, loading, error, reload, lastAddedId, setLastAddedId }}
+    >
       {children}
     </TripContext.Provider>
   );

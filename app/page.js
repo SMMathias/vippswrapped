@@ -1,13 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useTrip } from "./trip-provider";
+import { Avatar } from "@/components/avatar";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
 import { formatDateRange, formatDateTime, formatKr } from "@/lib/format";
 import styles from "./page.module.css";
 
 export default function GroupPage() {
-  const { trip, loading, error, reload } = useTrip();
+  const { trip, loading, error, reload, lastAddedId } = useTrip();
 
   // UI states: første gang er der ingen data endnu.
   if (!trip && loading) return <LoadingState />;
@@ -15,6 +17,9 @@ export default function GroupPage() {
 
   const nameOf = (memberId) =>
     trip.members.find((m) => m.id === memberId)?.name ?? "Ukendt";
+
+  // Udgiften, der lige er delt fra "Tilføj udgift" (hvis der er en).
+  const added = trip.expenses.find((e) => e.id === lastAddedId);
 
   return (
     <main className={styles.page}>
@@ -32,6 +37,13 @@ export default function GroupPage() {
         </p>
       )}
 
+      {/* Bekræftelse i tekst, så den ikke kun afhænger af animationen. */}
+      {added && (
+        <p className={styles.confirmation} role="status">
+          {added.title} er delt med {added.shares.length} personer og ligger nu på bordet.
+        </p>
+      )}
+
       <section aria-labelledby="balances-heading" className={styles.section}>
         <h2 id="balances-heading" className="text-heading-sm">
           Hvem skylder hvem
@@ -39,10 +51,8 @@ export default function GroupPage() {
         <ul className={styles.list}>
           {trip.balances.map(({ member, outstanding }) => (
             <li key={member.id} className={styles.row}>
-              <span className={styles.avatar} aria-hidden="true">
-                {member.name[0]}
-              </span>
-              <span className="text-label-lg">{member.name}</span>
+              <Avatar name={member.name} />
+              <span className={`text-label-lg ${styles.grow}`}>{member.name}</span>
               <BalanceText amount={outstanding} isMe={member.is_me} />
             </li>
           ))}
@@ -60,7 +70,10 @@ export default function GroupPage() {
         ) : (
           <ul className={styles.list}>
             {trip.expenses.map((expense) => (
-              <li key={expense.id} className={styles.row}>
+              <li
+                key={expense.id}
+                className={`${styles.row} ${expense.id === lastAddedId ? styles.landed : ""}`}
+              >
                 {/* Objektet er pynt: navnet står ved siden af, så alt er tom. */}
                 <Image
                   src={`/3d/${expense.category.image}`}
@@ -81,6 +94,18 @@ export default function GroupPage() {
           </ul>
         )}
       </section>
+
+      {/* Som i B01: "Tilføj udgift" i bunden. Kun mens turen er i gang. */}
+      {trip.status === "open" && (
+        <div className={styles.actions}>
+          <Link href="/tilfoej" className={`btn btn-secondary ${styles.addButton}`}>
+            <span className={styles.plus} aria-hidden="true">
+              +
+            </span>
+            Tilføj udgift
+          </Link>
+        </div>
+      )}
     </main>
   );
 }

@@ -1,8 +1,9 @@
 .page {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 24px 16px 48px;
+  padding: 24px 16px 0;
 }
 
 .header {
@@ -43,20 +44,9 @@
   min-width: 0;
 }
 
-/* Navnet i saldo-rækken skal skubbe beløbet ud til højre. */
-.row > .avatar + span {
+/* Navnet i saldo-rækken skubber beløbet ud til højre. */
+.grow {
   flex: 1;
-}
-
-.avatar {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-bg-avatar);
-  color: var(--color-text-avatar);
-  font-weight: var(--font-weight-semibold);
 }
 
 .object {
@@ -82,4 +72,73 @@
   border-radius: 12px;
   background: var(--color-bg-brand-subtle);
   color: var(--color-text-primary);
+}
+
+.confirmation {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--color-bg-accent-subtle);
+  color: var(--color-text-accent);
+}
+
+/* Den nye udgift "lander" med et lille bump (H1, B06). */
+.landed {
+  animation: land var(--motion-duration-slower) var(--motion-easing-bump) both;
+}
+
+.landed .object {
+  animation: drop var(--motion-duration-slower) var(--motion-easing-bump) both;
+}
+
+@keyframes land {
+  from {
+    background: var(--color-bg-accent-subtle);
+  }
+  to {
+    background: transparent;
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* "Tilføj udgift" bliver i bunden, også når man scroller. */
+.actions {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 16px 0 24px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg-base) 16px);
+}
+
+.addButton {
+  width: 100%;
+}
+
+/* Orange plus som i B01. Pynt (aria-hidden): teksten siger, hvad knappen gør. */
+.plus {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-bg-brand);
+  color: var(--color-text-on-brand);
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Reduceret bevægelse: ingen fald, kun den bløde baggrund, der fader ud. */
+@media (prefers-reduced-motion: reduce) {
+  .landed .object {
+    animation: none;
+  }
 }

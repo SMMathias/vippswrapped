@@ -1,0 +1,198 @@
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+/* Topbar som i Vipps (B02): tilbage-pil til venstre, titel i midten. */
+.topbar {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  min-height: 56px;
+  text-align: center;
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-left: -12px;
+  border-radius: 50%;
+  color: var(--color-text-accent);
+}
+
+.form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 8px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: none;
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Købene: hvide kort, så den grå hjælpetekst har nok kontrast. */
+.purchases {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.purchase {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 8px 16px 8px 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 16px;
+  background: var(--color-bg-base);
+  cursor: pointer;
+  transition: border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+/* Valgt: tykkere lilla kant + den udfyldte radioknap (ikke kun farve). */
+.purchase:has(:checked) {
+  border-color: var(--color-border-accent);
+  box-shadow: inset 0 0 0 1px var(--color-border-accent);
+}
+
+.radio {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-bg-accent);
+}
+
+.purchaseText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Det valgte køb vises stort, som i B03: "Beløb at dele". */
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.pop {
+  width: 140px;
+  height: 140px;
+  animation: pop var(--motion-duration-slow) var(--motion-easing-bump) both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.members {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.member:last-child {
+  border-bottom: none;
+}
+
+/* Hele teksten er label for kontakten, så rækken er et stort trykmål. */
+.memberText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+/* Kontakt (B05). Slukket: grå #76767B (4,5:1 mod hvid). Tændt: Vipps-orange.
+   Knoppens placering viser også tilstanden, så farven ikke står alene. */
+.switch {
+  appearance: none;
+  flex-shrink: 0;
+  position: relative;
+  width: 52px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-bg-base);
+  transition: transform var(--motion-duration-base) var(--motion-easing-bump);
+}
+
+.switch:checked {
+  background: var(--color-bg-brand);
+}
+
+.switch:checked::before {
+  transform: translateX(20px);
+}
+
+.error {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-text-primary);
+}
+
+/* Knappen bliver i bunden, også når man scroller. */
+.actions {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 16px 0 24px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg-base) 16px);
+}
+
+.submit {
+  width: 100%;
+}
+
+/* Reduceret bevægelse: objektet vises uden at skalere. */
+@media (prefers-reduced-motion: reduce) {
+  .pop {
+    animation: none;
+  }
+}
