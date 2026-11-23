@@ -1,0 +1,138 @@
+:root {
+  /* Primitiver */
+  --gray-950: #0d0e13;
+  --gray-900: #1e2028;
+  --gray-800: #2b2e38;
+  --gray-700: #474a57;
+  --gray-400: #999eab;
+  --gray-50: #f2f2f5;
+  --blue-500: #5a78ff;
+  --blue-900: #1a266b;
+  --green-400: #5cd185;
+  --red-400: #ff7878;
+
+  /* Farver */
+  --color-bg-base: var(--gray-950);
+  --color-bg-surface: var(--gray-900);
+  --color-bg-surface-raised: var(--gray-800);
+  --color-bg-accent: var(--blue-500);
+  --color-bg-accent-subtle: var(--blue-900);
+  --color-bg-positive: var(--green-400);
+  --color-bg-negative: var(--red-400);
+  --color-text-primary: var(--gray-50);
+  --color-text-secondary: var(--gray-400);
+  --color-text-accent: var(--blue-500);
+  --color-text-on-accent: var(--gray-50);
+  --color-text-positive: var(--green-400);
+  --color-text-negative: var(--red-400);
+  --color-border-default: var(--gray-700);
+  --color-border-accent: var(--blue-500);
+
+  /* Typografi */
+  --font-family-base: var(--font-inter, "Inter"), system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-display-lg: 44px;
+  --font-line-height-display-lg: 48px;
+  --font-size-display-md: 36px;
+  --font-line-height-display-md: 40px;
+  --font-size-heading-lg: 28px;
+  --font-line-height-heading-lg: 34px;
+  --font-size-heading-md: 22px;
+  --font-line-height-heading-md: 28px;
+  --font-size-heading-sm: 18px;
+  --font-line-height-heading-sm: 24px;
+  --font-size-body-md: 14px;
+  --font-line-height-body-md: 20px;
+  --font-size-body-sm: 13px;
+  --font-line-height-body-sm: 18px;
+  --font-size-label-lg: 15px;
+  --font-line-height-label-lg: 20px;
+  --font-size-label-md: 13px;
+  --font-line-height-label-md: 18px;
+  --font-size-caption-md: 12px;
+  --font-line-height-caption-md: 16px;
+  --font-size-caption-sm: 11px;
+  --font-line-height-caption-sm: 14px;
+
+  /* Motion (Standard) */
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 250ms;
+  --motion-duration-slow: 400ms;
+  --motion-duration-slower: 500ms;
+  --motion-easing-standard: cubic-bezier(0, 0, 0.58, 1);
+  --motion-easing-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  --motion-easing-bump: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Motion (Reduceret): følger brugerens indstilling for reduceret bevægelse */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-instant: 0ms;
+    --motion-duration-fast: 0ms;
+    --motion-duration-base: 150ms;
+    --motion-duration-slow: 150ms;
+    --motion-duration-slower: 150ms;
+    --motion-easing-bump: var(--motion-easing-standard);
+  }
+}
+
+/* Text styles: samme navne som text styles i Figma ("label/lg" = .text-label-lg) */
+.text-display-lg {
+  font: var(--font-weight-bold)
+    var(--font-size-display-lg)/var(--font-line-height-display-lg)
+    var(--font-family-base);
+}
+.text-display-md {
+  font: var(--font-weight-bold)
+    var(--font-size-display-md)/var(--font-line-height-display-md)
+    var(--font-family-base);
+}
+.text-heading-lg {
+  font: var(--font-weight-bold)
+    var(--font-size-heading-lg)/var(--font-line-height-heading-lg)
+    var(--font-family-base);
+}
+.text-heading-md {
+  font: var(--font-weight-bold)
+    var(--font-size-heading-md)/var(--font-line-height-heading-md)
+    var(--font-family-base);
+}
+.text-heading-sm {
+  font: var(--font-weight-semibold)
+    var(--font-size-heading-sm)/var(--font-line-height-heading-sm)
+    var(--font-family-base);
+}
+.text-body-md {
+  font: var(--font-weight-regular)
+    var(--font-size-body-md)/var(--font-line-height-body-md)
+    var(--font-family-base);
+}
+.text-body-sm {
+  font: var(--font-weight-regular)
+    var(--font-size-body-sm)/var(--font-line-height-body-sm)
+    var(--font-family-base);
+}
+.text-label-lg {
+  font: var(--font-weight-semibold)
+    var(--font-size-label-lg)/var(--font-line-height-label-lg)
+    var(--font-family-base);
+}
+.text-label-md {
+  font: var(--font-weight-semibold)
+    var(--font-size-label-md)/var(--font-line-height-label-md)
+    var(--font-family-base);
+}
+.text-caption-md {
+  font: var(--font-weight-medium)
+    var(--font-size-caption-md)/var(--font-line-height-caption-md)
+    var(--font-family-base);
+}
+.text-caption-sm {
+  font: var(--font-weight-medium)
+    var(--font-size-caption-sm)/var(--font-line-height-caption-sm)
+    var(--font-family-base);
+}
