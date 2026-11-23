@@ -17,6 +17,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="da" className={inter.variable}>
+      <head>
+        {/* Performance (Lighthouse): åbn forbindelsen til Supabase, mens siden loader,
+            så hentningen af turen ikke skal vente på DNS/TLS bagefter.
+            crossOrigin "anonymous", fordi supabase-js henter med CORS og uden cookies. */}
+        <link
+          rel="preconnect"
+          href={process.env.NEXT_PUBLIC_SUPABASE_URL}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         {/* Eksamenskrav: altid synligt, at det er et studieprojekt. Sticky, så den også ses ved scroll. */}
         <aside className={`text-caption-md ${styles.studyNote}`} aria-label="Om projektet">
