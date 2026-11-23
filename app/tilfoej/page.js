@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTrip } from "../trip-provider";
 import { supabase } from "@/lib/supabase";
@@ -11,6 +10,7 @@ import { matchCategory, objectSrc } from "@/lib/categories";
 import { splitEvenly } from "@/lib/split";
 import { formatDateTime, formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
+import { TopBar } from "@/components/top-bar";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
 import styles from "./page.module.css";
 
@@ -22,22 +22,7 @@ export default function AddExpensePage() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.topbar}>
-        <Link href="/" className={styles.back}>
-          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M15 5l-7 7 7 7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="visually-hidden">Tilbage til turen</span>
-        </Link>
-        <h1 className="text-heading-sm">Tilføj udgift</h1>
-      </header>
+      <TopBar title="Tilføj udgift" />
 
       {!trip && loading && <LoadingState />}
       {!trip && !loading && <ErrorState message={error} onRetry={reload} />}

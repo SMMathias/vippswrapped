@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTrip } from "./trip-provider";
 import { Avatar } from "@/components/avatar";
+import { DemoControls } from "@/components/demo-controls";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
+import { WrappedBanner } from "@/components/wrapped-banner";
 import { formatDateRange, formatDateTime, formatKr } from "@/lib/format";
 import styles from "./page.module.css";
 
@@ -21,6 +23,10 @@ export default function GroupPage() {
   // Udgiften, der lige er delt fra "Tilføj udgift" (hvis der er en).
   const added = trip.expenses.find((e) => e.id === lastAddedId);
 
+  // Min saldo til statusrækken (B01: "Status 210 kr >").
+  const myOutstanding =
+    trip.balances.find((b) => b.member.id === trip.me?.id)?.outstanding ?? 0;
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -29,6 +35,17 @@ export default function GroupPage() {
           {formatDateRange(trip.startsOn, trip.endsOn)} · {trip.members.length} personer
         </p>
       </header>
+
+      <WrappedBanner trip={trip} />
+
+      <Link href="/status" className={styles.statusRow}>
+        <span className="text-label-lg">Status</span>
+        <span className={styles.grow} />
+        <BalanceText amount={myOutstanding} isMe />
+        <span aria-hidden="true" className={styles.chevron}>
+          ›
+        </span>
+      </Link>
 
       {/* Fejl ved genindlæsning: de gamle data bliver stående, og fejlen vises over dem. */}
       {error && (
@@ -95,7 +112,9 @@ export default function GroupPage() {
         )}
       </section>
 
-      {/* Som i B01: "Tilføj udgift" i bunden. Kun mens turen er i gang. */}
+      <DemoControls />
+
+      {/* Som i B01: "Tilføj udgift" i bunden, mens turen er i gang. */}
       {trip.status === "open" && (
         <div className={styles.actions}>
           <Link href="/tilfoej" className={`btn btn-secondary ${styles.addButton}`}>
@@ -103,6 +122,15 @@ export default function GroupPage() {
               +
             </span>
             Tilføj udgift
+          </Link>
+        </div>
+      )}
+
+      {/* Under opgørelsen er næste skridt at gøre op. */}
+      {trip.status === "settling" && (
+        <div className={styles.actions}>
+          <Link href="/status" className={`btn btn-primary ${styles.addButton}`}>
+            Gør op
           </Link>
         </div>
       )}

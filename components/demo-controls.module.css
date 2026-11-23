@@ -1,0 +1,25 @@
+/* Stiplet kant: tydeligt, at det er en demo-ting og ikke en del af Vipps. */
+.demo {
+  border: 1px dashed var(--color-text-secondary);
+  border-radius: 12px;
+  padding: 0 16px;
+}
+
+/* Ikke display:flex på summary: så forsvinder pilen, der viser, at den kan foldes ud. */
+.demo summary {
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+.error {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--color-bg-brand-subtle);
+}

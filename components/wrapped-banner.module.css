@@ -1,0 +1,41 @@
+/* Som i B01: lys lilla flade, lås i en hvid cirkel, lilla tekst. */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--color-bg-accent-subtle);
+  color: var(--color-text-accent);
+  text-decoration: none;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-base);
+}
+
+.text {
+  flex: 1;
+}
+
+.cta {
+  flex-shrink: 0;
+  text-decoration: underline;
+}
+
+/* Åben: mørk lilla som B13 ("Jeres Wrapped er åben"). */
+.open {
+  background: var(--color-bg-accent-strong);
+  color: var(--color-text-on-accent);
+}
+
+.open .icon {
+  color: var(--color-text-accent);
+}
