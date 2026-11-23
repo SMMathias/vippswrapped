@@ -1,32 +1,43 @@
 :root {
-  /* Primitiver */
-  --gray-950: #0d0e13;
-  --gray-900: #1e2028;
-  --gray-800: #2b2e38;
-  --gray-700: #474a57;
-  --gray-400: #999eab;
-  --gray-50: #f2f2f5;
-  --blue-500: #5a78ff;
-  --blue-900: #1a266b;
-  --green-400: #5cd185;
-  --red-400: #ff7878;
+  /* Primitiver (Vipps, aflæst fra BKI-prototypen i Figma 23-11-2026) */
+  --white: #ffffff;
+  --black: #000000;
+  --gray-100: #f2f2f4;
+  --gray-200: #ecebf1;
+  --gray-300: #dcdce0;
+  --gray-500: #76767b;
+  --purple-50: #f1edfb;
+  --purple-600: #5a3cba;
+  --purple-800: #483678;
+  --orange-50: #fcf0ea;
+  --orange-100: #fce4d8;
+  --orange-500: #ff5b24;
+  --orange-700: #c2552f;
+  --green-500: #6e9f79;
+  --green-700: #2c6b41;
 
   /* Farver */
-  --color-bg-base: var(--gray-950);
-  --color-bg-surface: var(--gray-900);
-  --color-bg-surface-raised: var(--gray-800);
-  --color-bg-accent: var(--blue-500);
-  --color-bg-accent-subtle: var(--blue-900);
-  --color-bg-positive: var(--green-400);
-  --color-bg-negative: var(--red-400);
-  --color-text-primary: var(--gray-50);
-  --color-text-secondary: var(--gray-400);
-  --color-text-accent: var(--blue-500);
-  --color-text-on-accent: var(--gray-50);
-  --color-text-positive: var(--green-400);
-  --color-text-negative: var(--red-400);
-  --color-border-default: var(--gray-700);
-  --color-border-accent: var(--blue-500);
+  --color-bg-base: var(--white);
+  --color-bg-surface: var(--gray-100);
+  --color-bg-surface-raised: var(--gray-200);
+  --color-bg-accent: var(--purple-600);
+  --color-bg-accent-subtle: var(--purple-50);
+  --color-bg-accent-strong: var(--purple-800);
+  --color-bg-brand: var(--orange-500);
+  --color-bg-brand-subtle: var(--orange-50);
+  --color-bg-avatar: var(--orange-100);
+  --color-bg-positive: var(--green-500);
+  --color-bg-negative: var(--purple-600);
+  --color-text-primary: var(--black);
+  --color-text-secondary: var(--gray-500);
+  --color-text-accent: var(--purple-800);
+  --color-text-on-accent: var(--white);
+  --color-text-on-brand: var(--white);
+  --color-text-avatar: var(--orange-700);
+  --color-text-positive: var(--green-700);
+  --color-text-negative: var(--purple-600);
+  --color-border-default: var(--gray-300);
+  --color-border-accent: var(--purple-600);
 
   /* Typografi */
   --font-family-base: var(--font-inter, "Inter"), system-ui, sans-serif;

@@ -6,8 +6,8 @@
 
 html {
   height: 100%;
-  /* Kun mørkt tema (Design tokens). Får fx scrollbars og formularfelter til at være mørke. */
-  color-scheme: dark;
+  /* Kun lyst tema, som i Vipps (Design tokens). Får fx scrollbars og formularfelter til at være lyse. */
+  color-scheme: light;
 }
 
 body {
