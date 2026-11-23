@@ -196,10 +196,7 @@
   border-radius: 12px;
 }
 
-.table img {
-  display: block;
-  width: 100%;
-  height: auto;
+.tableInner {
   transition: filter var(--motion-duration-slower) var(--motion-easing-standard);
 }
 
@@ -276,7 +273,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .table img,
+  .tableInner,
   .barNeg,
   .barPos {
     transition: none;

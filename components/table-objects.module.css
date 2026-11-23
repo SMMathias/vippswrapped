@@ -1,0 +1,51 @@
+/* Bordpladen: en fersken-farvet ellipse som i B14. */
+.table {
+  position: relative;
+  padding: 24px 8px 16px;
+}
+
+.table::before {
+  content: "";
+  position: absolute;
+  inset: 40% 0 0;
+  border-radius: 50% / 40%;
+  background: var(--orange-100); /* lys fersken som bordet i B14 */
+}
+
+.objects {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+
+/* Tingene lander én efter én (forsinkelse ud fra rækkefølgen --i). */
+.object {
+  margin: 0 -6px -18px;
+  animation: land var(--motion-duration-slower) var(--motion-easing-bump) both;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+.object img {
+  display: block;
+  width: 84px;
+  height: 84px;
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    transform: translateY(-32px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .object {
+    animation: none;
+  }
+}

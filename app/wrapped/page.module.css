@@ -1,0 +1,335 @@
+/* Loading, fejl og låst: almindelig hvid side. */
+.plain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+}
+
+.locked {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-bottom: 64px;
+  text-align: center;
+}
+
+.lockCircle {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-bg-accent-subtle);
+  color: var(--color-text-accent);
+}
+
+/* ---------- Story ---------- */
+
+.story {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 28px); /* hele skærmen minus studieprojekt-linjen */
+  padding: 12px 16px 24px;
+  overflow: hidden;
+  touch-action: pan-y; /* vandret swipe håndteres af os, lodret scroll af browseren */
+  transition: background-color var(--motion-duration-slow) var(--motion-easing-standard);
+}
+
+/* Temaer. Kontrast er tjekket for hver kombination:
+   purple: hvid på #5A3CBA ≈ 7,5:1
+   peach:  sort på #FCF0EA ≈ 18:1
+   orange: sort på #FF5B24 ≈ 6,8:1 (hvid ville kun give ≈ 3,1:1)
+   dark:   hvid på #483678 ≈ 10:1, orange rollenavn ≈ 3,3:1 (kun stor tekst) */
+.purple {
+  background: var(--color-bg-accent);
+  color: var(--color-text-on-accent);
+}
+
+.peach {
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-text-primary);
+}
+
+.orange {
+  background: var(--color-bg-brand);
+  color: var(--color-text-primary);
+}
+
+.dark {
+  background: var(--color-bg-accent-strong);
+  color: var(--color-text-on-accent);
+}
+
+.progress {
+  display: flex;
+  gap: 4px;
+}
+
+.progress span {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.3;
+  transition: opacity var(--motion-duration-base) var(--motion-easing-standard);
+}
+
+.progress .progressDone {
+  opacity: 1;
+}
+
+.bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  min-height: 48px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Tap-zoner bag kortet. Kortet slipper tryk igennem (pointer-events: none),
+   undtagen på dets egne knapper og links. */
+.prev,
+.next {
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  z-index: 1;
+  width: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+.prev:disabled,
+.next:disabled {
+  cursor: default;
+}
+
+.prev:focus-visible,
+.next:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+
+.card {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  pointer-events: none;
+  animation: cardIn var(--motion-duration-slow) var(--motion-easing-bump) both;
+}
+
+.card a,
+.card button {
+  pointer-events: auto;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hint {
+  margin-top: 16px;
+  opacity: 0.85;
+}
+
+/* B15: tingene i et gitter */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 8px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gridItem img {
+  width: 88px;
+  height: 88px;
+}
+
+/* B16: højdepunkter på hvide kort */
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+}
+
+.highlightText {
+  display: flex;
+  flex-direction: column;
+}
+
+/* B17: rolle-reveal */
+.role {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.roleObject {
+  width: 200px;
+  height: 200px;
+  animation: rise var(--motion-duration-slower) var(--motion-easing-bump) both;
+}
+
+.roleAvatar {
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  background: var(--color-bg-avatar);
+  color: var(--color-text-avatar);
+  font: var(--font-weight-bold) var(--font-size-display-lg) / 1 var(--font-family-base);
+  animation: rise var(--motion-duration-slower) var(--motion-easing-bump) both;
+}
+
+.roleWho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Rollenavnet popper lidt efter objektet: kort pause før afsløringen (timing). */
+.roleName {
+  color: var(--color-bg-brand);
+  animation: reveal var(--motion-duration-slower) var(--motion-easing-bump) both;
+  animation-delay: var(--motion-duration-slow);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Slutkort: hele gruppen med roller */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  list-style: none;
+}
+
+.groupRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--color-bg-accent-strong);
+}
+
+.groupText {
+  display: flex;
+  flex-direction: column;
+}
+
+.endActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.endActions > * {
+  flex: 1;
+}
+
+.endPrimary {
+  background: var(--color-bg-base);
+  color: var(--color-text-accent);
+}
+
+/* Reduceret bevægelse: kortene crossfader, og intet hopper eller skalerer. */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation-name: fade;
+  }
+  .roleObject,
+  .roleAvatar,
+  .roleName {
+    animation: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
