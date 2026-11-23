@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useTrip } from "../trip-provider";
 import { useRpc } from "../use-rpc";
@@ -13,6 +12,7 @@ import { Avatar } from "@/components/avatar";
 import { CheckIcon, LockIcon } from "@/components/icons";
 import { DemoControls } from "@/components/demo-controls";
 import { ErrorState, LoadingState } from "@/components/states";
+import { TableObjects } from "@/components/table-objects";
 import { TopBar } from "@/components/top-bar";
 import styles from "./page.module.css";
 
@@ -266,13 +266,9 @@ function WrappedCard({ trip, now, busy, onNudge }) {
     >
       <div className={styles.table}>
         {/* Bordet er sløret, indtil Wrapped er åben: man kan ane tingene (silhuet). */}
-        <Image
-          src="/3d/3d-bordet-berlin.png"
-          alt=""
-          width={480}
-          height={230}
-          className={settled ? "" : styles.blurred}
-        />
+        <div className={`${styles.tableInner} ${settled ? "" : styles.blurred}`}>
+          <TableObjects expenses={trip.expenses} />
+        </div>
         {!settled && (
           <span className={styles.lock}>
             <LockIcon />
