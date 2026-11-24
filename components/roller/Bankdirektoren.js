@@ -17,9 +17,16 @@ export default function Bankdirektoren() {
           key={index}
           className={styles.coin}
           style={{ left: `${((index * 37) % 86) + 4}%`, bottom: (index % 3) * 16 + 8 }}
-          initial={{ y: -360, rotate: 0 }}
-          animate={{ y: 0, rotate: (index % 2 ? 1 : -1) * 200 }}
-          transition={{ delay: 1.6 + index * 0.07, type: "spring", bounce: 0.4, duration: 0.8 }}
+          // Usynlig, indtil den falder, så mønterne ikke hænger øverst på høje skærme.
+          initial={{ y: -360, rotate: 0, opacity: 0 }}
+          animate={{ y: 0, rotate: (index % 2 ? 1 : -1) * 200, opacity: 1 }}
+          transition={{
+            delay: 1.6 + index * 0.07,
+            type: "spring",
+            bounce: 0.4,
+            duration: 0.8,
+            opacity: { delay: 1.6 + index * 0.07, duration: 0.1 },
+          }}
         >
           kr
         </motion.span>

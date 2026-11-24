@@ -51,9 +51,15 @@ export default function Natteravnen({ result }) {
 
       <motion.div
         className={styles.moon}
-        initial={{ y: 200 }}
-        animate={{ y: 0 }}
-        transition={{ delay: reduceMotion ? 0 : 1, duration: 2.6, ease: "easeOut" }}
+        // Månen toner frem, mens den stiger, så den ikke står midt på himlen og venter.
+        initial={{ y: 200, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          delay: reduceMotion ? 0 : 1,
+          duration: reduceMotion ? 0 : 2.6,
+          ease: "easeOut",
+          opacity: { delay: reduceMotion ? 0 : 1, duration: reduceMotion ? 0 : 1 },
+        }}
       />
 
       <div className={styles.clock}>
