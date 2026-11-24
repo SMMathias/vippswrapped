@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useTrip } from "../trip-provider";
 import { assignRoles, highlights } from "@/lib/wrapped";
 import { bannerState } from "@/lib/status";
-import { objectSrc } from "@/lib/categories";
 import { Avatar } from "@/components/avatar";
 import DagForDag from "@/components/DagForDag";
 import Historie from "@/components/Historie";
@@ -15,6 +13,7 @@ import { LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
+import Rolle, { PAGES } from "@/components/Rolle";
 import TopKategorier from "@/components/TopKategorier";
 import TopTre from "@/components/TopTre";
 import styles from "./page.module.css";
@@ -99,10 +98,11 @@ function buildCards(trip) {
       theme: "lilac",
       content: <TopTre trip={trip} />,
     },
+    // F14–F17 · Alle får deres egen rolleside. Dig til sidst, så din rolle er klimaks.
     ...ordered.map((r) => ({
       key: `role-${r.member.id}`,
-      theme: "dark",
-      content: <RoleReveal result={r} />,
+      theme: PAGES[r.role.id].theme,
+      content: <Rolle trip={trip} result={r} />,
     })),
     {
       key: "group",
@@ -128,32 +128,4 @@ function buildCards(trip) {
       end: true,
     },
   ];
-}
-
-// B17: rolle-reveal. Objektet, der "beviser" rollen, navnet og tallet bag.
-function RoleReveal({ result }) {
-  const { member, role, detail, object } = result;
-  return (
-    <div className={styles.role}>
-      {object ? (
-        <Image
-          src={objectSrc(object.category)}
-          alt=""
-          width={200}
-          height={200}
-          className={styles.roleObject}
-        />
-      ) : (
-        <span className={styles.roleAvatar} aria-hidden="true">
-          {member.name.slice(0, 2).toUpperCase()}
-        </span>
-      )}
-      <p className={`text-heading-sm ${styles.roleWho}`}>
-        <Avatar name={member.name} />
-        {member.is_me ? "Du er" : `${member.name} er`}
-      </p>
-      <h2 className={`text-display-lg ${styles.roleName}`}>{role.name}</h2>
-      <p className="text-label-lg">{detail}</p>
-    </div>
-  );
 }

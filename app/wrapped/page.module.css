@@ -27,69 +27,6 @@
   color: var(--color-text-accent);
 }
 
-/* B17: rolle-reveal */
-.role {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-}
-
-.roleObject {
-  width: 200px;
-  height: 200px;
-  animation: rise var(--motion-duration-slower) var(--motion-easing-bump) both;
-}
-
-.roleAvatar {
-  display: grid;
-  place-items: center;
-  width: 160px;
-  height: 160px;
-  margin-bottom: 20px;
-  border-radius: 50%;
-  background: var(--color-bg-avatar);
-  color: var(--color-text-avatar);
-  font: var(--font-weight-bold) var(--font-size-display-lg) / 1 var(--font-family-base);
-  animation: rise var(--motion-duration-slower) var(--motion-easing-bump) both;
-}
-
-.roleWho {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Rollenavnet popper lidt efter objektet: kort pause før afsløringen (timing). */
-.roleName {
-  color: var(--color-bg-brand);
-  animation: reveal var(--motion-duration-slower) var(--motion-easing-bump) both;
-  animation-delay: var(--motion-duration-slow);
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: scale(0.6);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* Slutkort: hele gruppen med roller */
 .group {
   display: flex;
@@ -110,13 +47,4 @@
 .groupText {
   display: flex;
   flex-direction: column;
-}
-
-/* Reduceret bevægelse: intet hopper eller skalerer. */
-@media (prefers-reduced-motion: reduce) {
-  .roleObject,
-  .roleAvatar,
-  .roleName {
-    animation: none;
-  }
 }
