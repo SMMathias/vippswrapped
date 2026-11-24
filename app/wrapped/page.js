@@ -8,11 +8,11 @@ import { useTrip } from "../trip-provider";
 import { assignRoles, highlights } from "@/lib/wrapped";
 import { bannerState, nameOf } from "@/lib/status";
 import { objectSrc } from "@/lib/categories";
-import { formatDateRange, formatKr } from "@/lib/format";
+import { formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
+import Kvittering from "@/components/Kvittering";
 import { BackIcon, LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
-import { TableObjects } from "@/components/table-objects";
 import { TopBar } from "@/components/top-bar";
 import styles from "./page.module.css";
 
@@ -70,20 +70,10 @@ function buildCards(trip) {
 
   return [
     {
-      key: "intro",
-      theme: "purple",
-      content: (
-        <>
-          <p className="text-label-lg">{formatDateRange(trip.startsOn, trip.endsOn)}</p>
-          <h2 className="text-display-lg">{trip.name}</h2>
-          <TableObjects expenses={trip.expenses} />
-          <p className="text-label-lg">
-            {trip.members.length} venner · {h.count} køb
-          </p>
-          <p className="text-display-lg">{formatKr(h.total)}</p>
-          <p className="text-body-md">{formatKr(h.perPerson)} pr. person</p>
-        </>
-      ),
+      // F11 · Bonen (prototype v19): turens kvittering skrives, mens tingene lander.
+      key: "bon",
+      theme: "receipt",
+      content: <Kvittering trip={trip} total={h.total} perPerson={h.perPerson} />,
     },
     {
       key: "items",
