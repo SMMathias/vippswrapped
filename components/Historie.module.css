@@ -121,9 +121,24 @@
   outline-offset: -4px;
 }
 
+/* Overgangen: det forrige korts farve (backdrop) og det nye kort (layer), der
+   vokser frem som en cirkel. Layer slipper tryk igennem til tap-zonerne. */
+.backdrop,
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+.layer {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 16px 24px; /* plads til fremdrift og top-baren */
+  pointer-events: none;
+}
+
 .card {
   position: relative;
-  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
