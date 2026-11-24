@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { ease } from "@/lib/motion";
 import Flyvere from "@/components/Flyvere";
 import Padlock from "@/components/Padlock";
 import Slutskaerm from "@/components/Slutskaerm";
@@ -13,7 +14,8 @@ import styles from "./Oplaasning.module.css";
 
 // F09 · Oplåsningen: det store øjeblik, når alle har betalt (prototype v19).
 // Beskeden kommer, hængelåsen revner tre gange og springer, "Jeres Wrapped"
-// hvirvler forbi, turens ting flyver ud mod skærmen, og nattehimlen åbner.
+// hvirvler forbi, turens ting flyver ud mod skærmen, og efter et hvidt lysglimt
+// står slutskærmen der.
 // Hvert trin har sin ventetid i ms. Reduceret bevægelse: slutskærmen med det samme.
 const steps = [
   { name: "start", wait: 300 },
@@ -25,9 +27,11 @@ const steps = [
   { name: "break", wait: 500 },
   { name: "title", wait: 1500 },
   { name: "fly", wait: 2300 },
+  { name: "white", wait: 300 },
   { name: "open" },
 ];
 const last = steps.length - 1;
+const lockStep = steps.findIndex((s) => s.name === "lock");
 const breakStep = steps.findIndex((s) => s.name === "break");
 const crackCount = { crack1: 1, crack2: 2, crack3: 3 };
 
@@ -64,8 +68,16 @@ export default function Oplaasning({ trip, onDone }) {
 
   return (
     <main className={styles.screen} aria-labelledby="open-title">
-      {/* Nattehimlen: stjerner og en galakse, der drejer langsomt (CSS). */}
-      <div className={`${styles.sky} ${step >= breakStep ? styles.skyOpen : ""}`} aria-hidden="true" />
+      {/* Nattehimlen åbner som en cirkel bag låsen: stjerner og en galakse, der drejer (CSS). */}
+      <motion.div
+        className={styles.night}
+        initial={false}
+        animate={{ clipPath: step >= lockStep ? "circle(150% at 50% 50%)" : "circle(0% at 50% 50%)" }}
+        transition={{ duration: reduceMotion ? 0 : 0.7, ease: ease.inOut }}
+        aria-hidden="true"
+      >
+        <div className={`${styles.sky} ${step >= breakStep ? styles.skyOpen : ""}`} />
+      </motion.div>
 
       <motion.div
         className={styles.push}
@@ -84,7 +96,7 @@ export default function Oplaasning({ trip, onDone }) {
         )}
       </motion.div>
 
-      {step >= 2 && step <= breakStep && (
+      {step >= lockStep && step <= breakStep && (
         <div className={styles.center}>
           <Padlock cracks={crackCount[name] ?? 0} broken={name === "break"} />
         </div>
@@ -121,9 +133,20 @@ export default function Oplaasning({ trip, onDone }) {
         </div>
       )}
 
-      {name === "fly" && <Flyvere items={items} labels={roles} />}
+      {(name === "fly" || name === "white") && <Flyvere items={items} labels={roles} />}
 
       {open && <Slutskaerm trip={trip} items={items} onDone={onDone} />}
+
+      {/* Skærmen bliver hvid et øjeblik, og slutskærmen kommer frem bag lyset. */}
+      {(name === "white" || open) && (
+        <motion.div
+          className={styles.flash}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: open ? 0 : 1 }}
+          transition={{ duration: open ? 0.7 : 0.25 }}
+          aria-hidden="true"
+        />
+      )}
 
       {!open && (
         <button type="button" className={styles.skip} onClick={() => setStep(last)}>

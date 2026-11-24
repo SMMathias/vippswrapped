@@ -1,4 +1,5 @@
-/* F09 · oplåsningen. Kun F09 er nat: dyb lilla med stjerner og en galakse. */
+/* F09 · oplåsningen. Beskeden kommer på den lyse app, og så åbner natten:
+   dyb lilla med stjerner og en galakse. */
 .screen {
   position: relative;
   flex: 1;
@@ -6,8 +7,14 @@
   flex-direction: column;
   min-height: calc(100dvh - 28px); /* hele skærmen minus studieprojekt-linjen */
   overflow: hidden;
-  background: #140e2c;
+  background: var(--color-bg-base);
   color: var(--color-text-on-accent);
+}
+
+.night {
+  position: absolute;
+  inset: 0;
+  background: #140e2c;
 }
 
 /* Stjerner som små prikker i et mønster, og en galakse af farvede lysskyer. */
@@ -119,7 +126,7 @@
   padding: 8px 16px;
   border: none;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(20, 14, 44, 0.55);
   color: var(--white);
   font: inherit;
   font-weight: 600;

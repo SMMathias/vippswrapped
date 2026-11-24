@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { ease } from "@/lib/motion";
@@ -9,11 +9,13 @@ import { tripTotal } from "@/lib/status";
 import styles from "./Slutskaerm.module.css";
 
 // F09 · slutskærmen: "Jeres Wrapped er åben". Turens ting hvirvler ind og kredser
-// om titlen, og alle i gruppen får et flueben, én ad gangen.
+// om titlen, og alle i gruppen får et flueben, én ad gangen. "Se Wrapped" flyver
+// gennem titlen, og en lilla cirkel vokser ud fra knappen og fører videre til bonen.
 const radiusX = 165; // ringen er en flad ellipse, som en ring set lidt fra siden
 const radiusY = 80;
 const points = 24; // punkter pr. omgang
 const roundTime = 14; // sekunder pr. omgang
+const leaveTime = 700; // ms for overgangen til Wrapped-kortene
 
 // Én omgang på ellipsen som keyframes. Ting forrest er større og ligger over titlen.
 function orbitPath(start) {
@@ -32,6 +34,7 @@ function orbitPath(start) {
 export default function Slutskaerm({ trip, items, onDone }) {
   const goRef = useRef(null);
   const reduceMotion = useReducedMotion();
+  const [leaving, setLeaving] = useState(false);
 
   // Reduceret bevægelse: alt står der med det samme, uden ventetid.
   const wait = (seconds) => (reduceMotion ? 0 : seconds);
@@ -40,6 +43,12 @@ export default function Slutskaerm({ trip, items, onDone }) {
   useEffect(() => {
     goRef.current?.focus();
   }, []);
+
+  function go() {
+    if (reduceMotion) return onDone();
+    setLeaving(true);
+    setTimeout(onDone, leaveTime);
+  }
 
   return (
     <div className={styles.final}>
@@ -52,7 +61,12 @@ export default function Slutskaerm({ trip, items, onDone }) {
         Alle {trip.members.length} har betalt
       </motion.p>
 
-      <div className={styles.stage}>
+      <motion.div
+        className={styles.stage}
+        initial={false}
+        animate={leaving ? { scale: 2.4, opacity: 0, filter: "blur(8px)" } : { scale: 1, opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.6, ease: [0.5, 0, 0.9, 0.4] }}
+      >
         <ul className={styles.orbit} aria-hidden="true">
           {items.map((src, index) => (
             <motion.li
@@ -98,7 +112,7 @@ export default function Slutskaerm({ trip, items, onDone }) {
             er åben
           </motion.span>
         </h1>
-      </div>
+      </motion.div>
 
       <motion.p
         className={styles.sub}
@@ -140,13 +154,24 @@ export default function Slutskaerm({ trip, items, onDone }) {
         ref={goRef}
         type="button"
         className={`btn ${styles.go}`}
-        onClick={onDone}
+        onClick={go}
+        disabled={leaving}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: wait(2.6), duration: 0.4, ease: ease.bump }}
       >
         Se Wrapped
       </motion.button>
+
+      {leaving && (
+        <motion.div
+          className={styles.cover}
+          initial={{ clipPath: "circle(0% at 50% 92%)" }}
+          animate={{ clipPath: "circle(150% at 50% 92%)" }}
+          transition={{ duration: leaveTime / 1000, ease: [0.7, 0, 0.3, 1] }}
+          aria-hidden="true"
+        />
+      )}
     </div>
   );
 }

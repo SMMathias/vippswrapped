@@ -172,6 +172,14 @@
   outline-offset: 3px;
 }
 
+/* Samme lilla som bonen (F11), så overgangen fortsætter direkte i første kort. */
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: radial-gradient(120% 50% at 50% 0%, #5a3cba 0, #483678 55%, #3c2d66 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .big {
     animation: none;
