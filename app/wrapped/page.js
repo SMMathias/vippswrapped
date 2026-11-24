@@ -10,7 +10,7 @@ import { bannerState, nameOf } from "@/lib/status";
 import { objectSrc } from "@/lib/categories";
 import { formatDateRange, formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
-import { LockIcon } from "@/components/icons";
+import { BackIcon, LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
 import { TableObjects } from "@/components/table-objects";
 import { TopBar } from "@/components/top-bar";
@@ -265,11 +265,14 @@ function Story({ trip }) {
         ))}
       </div>
 
+      {/* Test runde 2: tydelig vej tilbage. Pil og tekst øverst til venstre som
+          i resten af appen (top-baren), i stedet for "Luk" til højre. */}
       <div className={styles.bar}>
-        <span className="text-label-md">{trip.name}</span>
         <Link href="/" className={`text-label-lg ${styles.close}`}>
-          Luk
+          <BackIcon />
+          Til turen
         </Link>
+        <span className="text-label-md">{trip.name}</span>
       </div>
 
       {/* Tap-zoner: venstre halvdel tilbage, højre halvdel frem (som stories). */}

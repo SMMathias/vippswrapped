@@ -6,7 +6,7 @@ import { useTrip } from "../trip-provider";
 import { useRpc } from "../use-rpc";
 import { useNow } from "../use-now";
 import { TRIP_SLUG } from "@/lib/supabase";
-import { canNudge, joinNames, nameOf, tripTotal, waitingFor } from "@/lib/status";
+import { canNudge, nameOf, tripTotal, waitingNames } from "@/lib/status";
 import { formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
 import { CheckIcon, LockIcon } from "@/components/icons";
@@ -63,10 +63,12 @@ function Status({ trip }) {
 
   return (
     <div className={styles.content}>
-      {/* B09: hvad skal jeg betale, og hvad har turen kostet */}
+      {/* B09: hvad skal jeg betale, og hvad har turen kostet.
+          Test runde 2 (TP3): overskriften siger nu, om beløbet er en saldo
+          (turen er i gang) eller det, du skal betale (efter opgørelsen). */}
       <section className={styles.summary} aria-labelledby="summary-heading">
         <h2 id="summary-heading" className="text-body-md">
-          {myOutstanding > 0 ? "Du får" : "Du skal betale"}
+          {summaryHeading(trip.status, myOutstanding)}
         </h2>
         <p className="text-display-md">{formatKr(Math.abs(myOutstanding))}</p>
         <dl className={styles.totalRow}>
@@ -182,6 +184,13 @@ function Status({ trip }) {
   );
 }
 
+// Overskrift over beløbet øverst. Fortegnet står i ord, ikke kun i farve.
+function summaryHeading(status, outstanding) {
+  if (outstanding === 0) return status === "open" ? "Du er i nul lige nu" : "Du er gjort op";
+  if (status === "open") return outstanding < 0 ? "Du skylder lige nu" : "Du får lige nu";
+  return outstanding < 0 ? "Du skal betale" : "Du får";
+}
+
 // B09: før opgørelsen. Hvem skylder hvem som bjælker + "Afslut og beregn".
 function OpenState({ trip, run, busy }) {
   const rows = [...trip.balances].sort((a, b) => b.outstanding - a.outstanding);
@@ -209,13 +218,17 @@ function OpenState({ trip, run, busy }) {
                     {outstanding > 0 && <span className={styles.barPos} style={{ width }} />}
                   </span>
                 </span>
+                {/* Test runde 2: "skylder"/"får" i ord, så fortegnet ikke kan misforstås. */}
                 <span
                   className={`text-label-md ${styles.barAmount} ${
-                    outstanding < 0 ? styles.negative : styles.positive
+                    outstanding < 0 ? styles.negative : outstanding > 0 ? styles.positive : ""
                   }`}
                 >
-                  {outstanding > 0 ? "+" : outstanding < 0 ? "−" : ""}
-                  {formatKr(Math.abs(outstanding))}
+                  {outstanding < 0
+                    ? `Skylder ${formatKr(-outstanding)}`
+                    : outstanding > 0
+                      ? `Får ${formatKr(outstanding)}`
+                      : "Gjort op"}
                 </span>
               </li>
             );
@@ -228,8 +241,11 @@ function OpenState({ trip, run, busy }) {
           Er alle færdige med at tilføje udgifter?
         </h2>
         <p className={`text-body-md ${styles.secondary}`}>
-          Når I afslutter, beregnes det, hvem der skal betale hvem. Derefter kan der ikke tilføjes
-          flere udgifter.
+          Saldoerne ovenfor er, hvad hver person samlet skylder eller får. Når I afslutter, bliver de
+          lavet om til så få overførsler som muligt, så du kan se præcis, hvem du skal betale.
+        </p>
+        <p className={`text-body-md ${styles.secondary}`}>
+          Derefter kan der ikke tilføjes flere udgifter. Wrapped åbner, når alle har betalt.
         </p>
         <button
           type="button"
@@ -249,7 +265,6 @@ function OpenState({ trip, run, busy }) {
 // B10/B12/B13: det låste (eller åbne) Wrapped-kort med alle overførsler.
 function WrappedCard({ trip, now, busy, onNudge }) {
   const settled = trip.status === "settled";
-  const waiting = waitingFor(trip);
   const nudgeAllowed = canNudge(trip);
 
   // Som B10 → B12: før første betaling en generel tekst, derefter hvem der mangler.
@@ -257,7 +272,7 @@ function WrappedCard({ trip, now, busy, onNudge }) {
   let subtitle;
   if (settled) subtitle = `${trip.expenses.length} køb · ${trip.members.length} roller`;
   else if (!anyPaid) subtitle = "Den åbner, når alle har betalt.";
-  else subtitle = `Venter på ${joinNames(waiting.map((m) => (m.is_me ? "dig" : m.name)))}.`;
+  else subtitle = `Den åbner, når ${waitingNames(trip)} har betalt.`;
 
   return (
     <section
