@@ -15,6 +15,9 @@ export function TripProvider({ children }) {
   // Id på den udgift, der lige er tilføjet. Gruppeskærmen bruger det til at
   // vise en bekræftelse og lade tingen "lande" på bordet.
   const [lastAddedId, setLastAddedId] = useState(null);
+  // Kort besked øverst på status, fx "Du har betalt Mads 340 kr." (prototype F07/F08).
+  // Ligger her, så den også kan sættes fra betal-skærmen, før man kommer tilbage.
+  const [notice, setNotice] = useState("");
 
   // Henter turen og lægger svaret i state. State sættes først i callbacks,
   // når svaret er kommet, og ikke direkte i effekten.
@@ -44,7 +47,7 @@ export function TripProvider({ children }) {
 
   return (
     <TripContext.Provider
-      value={{ trip, loading, error, reload, lastAddedId, setLastAddedId }}
+      value={{ trip, loading, error, reload, lastAddedId, setLastAddedId, notice, setNotice }}
     >
       {children}
     </TripContext.Provider>

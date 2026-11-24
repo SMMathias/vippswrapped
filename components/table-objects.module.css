@@ -20,14 +20,17 @@
   list-style: none;
 }
 
-/* Tingene lander én efter én (forsinkelse ud fra rækkefølgen --i). */
-.object {
+.objects li {
   margin: 0 -6px -18px;
+}
+
+/* Tingene lander én efter én (forsinkelse ud fra rækkefølgen --i). */
+.land {
   animation: land var(--motion-duration-slower) var(--motion-easing-bump) both;
   animation-delay: calc(var(--i) * 90ms);
 }
 
-.object img {
+.objects img {
   display: block;
   width: 84px;
   height: 84px;
@@ -45,7 +48,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .object {
+  .land {
     animation: none;
   }
 }

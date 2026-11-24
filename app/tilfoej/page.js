@@ -36,7 +36,11 @@ function SharePurchaseForm({ trip }) {
   const router = useRouter();
   const { reload, setLastAddedId } = useTrip();
 
-  const [purchaseId, setPurchaseId] = useState(null);
+  // Det nyeste køb er valgt fra start (test runde 2, H1: tid pr. udgift steg i B).
+  // Oftest er det det køb, man lige har betalt. Man kan stadig vælge et andet.
+  const [purchaseId, setPurchaseId] = useState(
+    () => trip.recentPurchases.find((p) => p.expense_id === null)?.id ?? null
+  );
   // Alle er slået til fra start, fordi det er det mest almindelige.
   const [memberIds, setMemberIds] = useState(() => trip.members.map((m) => m.id));
   const [saving, setSaving] = useState(false);
@@ -164,7 +168,11 @@ function SharePurchaseForm({ trip }) {
             />
             <p className={`text-body-md ${styles.secondary}`}>Beløb at dele</p>
             <p className="text-display-md">{formatKr(purchase.amount)}</p>
-            <p className="text-body-md">{purchase.title} · betalt af dig</p>
+            <p className="text-body-md">
+              {selectedMembers.length > 0
+                ? `${formatKr(purchase.amount / selectedMembers.length)} hver, ${selectedMembers.length} ${selectedMembers.length === 1 ? "person" : "personer"}`
+                : "Vælg mindst én person"}
+            </p>
           </div>
 
           <fieldset className={styles.fieldset}>

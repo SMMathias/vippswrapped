@@ -81,14 +81,45 @@
   color: var(--color-text-primary);
 }
 
-/* B01: "Status ... 210 kr >" som en række, der fører til status-siden. */
-.statusRow {
+/* Bordet (F01): et kort med turens ting og antal køb. */
+.tableCard {
+  padding: 12px 12px 20px;
+  border-radius: 16px;
+  background: var(--color-bg-brand-subtle);
+}
+
+.tableHead {
+  display: flex;
+  justify-content: space-between;
+  color: var(--orange-800);
+}
+
+.cleared {
+  padding: 40px 16px;
+  border-radius: 50% / 40%;
+  background: var(--orange-100);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+/* Dit eget beløb (F01, test runde 2 TP3). */
+.oweCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--color-bg-accent-subtle);
+  color: var(--color-text-accent);
+}
+
+.statusLink {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   min-height: 48px;
-  padding: 0 4px;
-  border-bottom: 1px solid var(--color-border-default);
+  margin-top: 8px;
+  border-top: 1px solid var(--color-border-default);
   color: var(--color-text-primary);
   text-decoration: none;
 }
