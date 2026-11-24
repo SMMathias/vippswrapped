@@ -72,6 +72,12 @@
   color: var(--color-text-on-accent);
 }
 
+/* F11 · bonen: lilla med lys fra toppen (som prototypen). Hvid tekst ≈ 10:1. */
+.receipt {
+  background: radial-gradient(120% 50% at 50% 0%, #5a3cba 0, #483678 55%, #3c2d66 100%);
+  color: var(--color-text-on-accent);
+}
+
 .progress {
   display: flex;
   gap: 4px;
