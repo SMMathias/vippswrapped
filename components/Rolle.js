@@ -7,6 +7,8 @@ import { ease } from "@/lib/motion";
 import { objectSrc } from "@/lib/categories";
 import { TZ, formatKr } from "@/lib/format";
 import { nameOf } from "@/lib/status";
+import Bankdirektoren from "@/components/roller/Bankdirektoren";
+import Proviantmesteren from "@/components/roller/Proviantmesteren";
 import styles from "./Rolle.module.css";
 
 // F14–F17 · Rollesiderne (prototype v19). Alle får deres egen side: navnet slår ned,
@@ -21,6 +23,7 @@ export const PAGES = {
     label: "Lagt ud",
     kr: true,
     caption: "lagt ud, mest af alle",
+    Motif: Bankdirektoren,
   },
   natteravnen: {
     theme: "dark",
@@ -34,6 +37,7 @@ export const PAGES = {
     label: "I alt",
     kr: true,
     caption: "brugt på indkøb",
+    Motif: Proviantmesteren,
   },
   chaufforen: {
     theme: "peach",
