@@ -1,0 +1,153 @@
+/* F11 · bonen. Lilla flade, en printer og en kvittering, der skrives. */
+.scene {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.sticker {
+  align-self: flex-start;
+  margin-bottom: 16px;
+  padding: 6px 10px 5px;
+  background: var(--orange-500);
+  color: var(--black);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+.printer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 22px;
+  border-radius: 11px;
+  background: linear-gradient(#2a1d55, #1d1535);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Papiret med en takket kant forneden. Det "printes" ved at blive vist oppefra og ned. */
+.receipt {
+  width: calc(100% - 32px);
+  margin-top: -11px;
+  padding: 24px 18px 30px;
+  background: #fffaf6;
+  color: var(--purple-800);
+  font-variant-numeric: tabular-nums;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 18px 9px repeat-x;
+}
+
+.head {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.place {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0.75;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 12px;
+  padding: 8px 0 10px;
+  border-top: 2px dashed rgba(72, 54, 120, 0.35);
+  border-bottom: 2px dashed rgba(72, 54, 120, 0.35);
+}
+
+.total span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.total b {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+/* Mange køb: listen kan scrolles. */
+.lines {
+  display: grid;
+  max-height: 216px;
+  margin: 8px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  pointer-events: auto;
+}
+
+.lines li {
+  display: flex;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 27px;
+  font-weight: 600;
+}
+
+.lines span {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 2px dotted rgba(72, 54, 120, 0.35);
+}
+
+.lines b {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.each {
+  margin-top: 14px;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--purple-600);
+}
+
+/* Gulvet nederst, hvor tingene lander. */
+.floor {
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  bottom: -24px;
+  height: 160px;
+}
+
+.item {
+  position: absolute;
+  bottom: 8px;
+  width: 80px;
+  height: 80px;
+  cursor: grab;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.item:active {
+  cursor: grabbing;
+}
+
+.item img {
+  display: block;
+  filter: drop-shadow(0 10px 8px rgba(30, 15, 60, 0.3));
+  pointer-events: none;
+}
