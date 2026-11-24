@@ -5,7 +5,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - 28px); /* hele skærmen minus studieprojekt-linjen */
+  min-height: calc(var(--screen-height, 100dvh) - 28px); /* hele skærmen minus studieprojekt-linjen */
   overflow: hidden;
   background: var(--color-bg-base);
   color: var(--color-text-on-accent);

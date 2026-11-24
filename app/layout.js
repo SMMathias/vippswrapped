@@ -29,15 +29,18 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        {/* Eksamenskrav: altid synligt, at det er et studieprojekt. Sticky, så den også ses ved scroll. */}
-        <aside className={`text-caption-md ${styles.studyNote}`} aria-label="Om projektet">
-          Studieprojekt på EAAA. Ikke tilknyttet Vipps MobilePay.
-        </aside>
-        <TripProvider>
-          <MotionProvider>
-            <div className={styles.app}>{children}</div>
-          </MotionProvider>
-        </TripProvider>
+        {/* På en computer vises appen i en telefonform (layout.module.css). På mobilen er den usynlig. */}
+        <div className={styles.phone}>
+          {/* Eksamenskrav: altid synligt, at det er et studieprojekt. Sticky, så den også ses ved scroll. */}
+          <aside className={`text-caption-md ${styles.studyNote}`} aria-label="Om projektet">
+            Studieprojekt på EAAA. Ikke tilknyttet Vipps MobilePay.
+          </aside>
+          <TripProvider>
+            <MotionProvider>
+              <div className={styles.app}>{children}</div>
+            </MotionProvider>
+          </TripProvider>
+        </div>
       </body>
     </html>
   );
