@@ -1,0 +1,217 @@
+/* F18b · polaroidet på en lys fersken flade. */
+.scene {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+/* Kortet tager imod fingeren, så tryk på selve kortet bladrer ikke videre. */
+.polaroid {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  padding: 12px 12px 10px;
+  overflow: hidden;
+  background: var(--white);
+  color: var(--purple-800);
+  box-shadow: 0 20px 40px rgba(60, 30, 20, 0.25);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.photo {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+}
+
+.polaroid[data-wide] .photo {
+  height: 160px;
+}
+
+.picture {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#ffb08f, #ffe9dc 70%);
+}
+
+.sun {
+  position: absolute;
+  left: calc(50% - 70px);
+  top: 18px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(#fff7e0, #ffcfba 60%, transparent 70%);
+}
+
+.people {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people li {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 -5px;
+  border: 2px solid var(--purple-800);
+  border-radius: 50%;
+  background: var(--orange-50);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.table {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: -40px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--purple-600);
+}
+
+.things {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.things li:nth-child(even) {
+  translate: 0 10px;
+}
+
+.tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--white);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.dark {
+  position: absolute;
+  inset: 0;
+  background: #2b2220;
+}
+
+/* ---------- Teksten under billedet ---------- */
+
+.body {
+  padding-top: 10px;
+}
+
+.title {
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.04em;
+}
+
+.dates {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin: 10px 0 0;
+}
+
+.facts dt {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.facts dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.facts dd.big {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 900;
+}
+
+/* Over 5 personer står rollerne i to kolonner under resten. */
+.polaroid[data-wide] .roles {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 12px;
+}
+
+.polaroid[data-wide] .roles dt {
+  grid-column: 1 / -1;
+}
+
+.polaroid[data-wide] .roles dd {
+  font-size: 11px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.footer span:first-child {
+  color: var(--green-700);
+}
+
+/* Holofolien: en skrå regnbue, der blandes ind i kortet og flytter sig med fingeren. */
+.foil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 91, 36, 0.35) 35%,
+      rgba(255, 240, 150, 0.4) 45%,
+      rgba(120, 220, 255, 0.35) 55%,
+      rgba(185, 166, 245, 0.45) 65%,
+      transparent 80%
+    )
+    0 0 / 250% 250%;
+  mix-blend-mode: color-dodge;
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}

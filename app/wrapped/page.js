@@ -14,6 +14,7 @@ import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
 import Rolle, { PAGES } from "@/components/Rolle";
+import Samlet from "@/components/Samlet";
 import TopKategorier from "@/components/TopKategorier";
 import TopTre from "@/components/TopTre";
 import styles from "./page.module.css";
@@ -109,6 +110,12 @@ function buildCards(trip) {
       key: "holdet",
       theme: "lilac",
       content: <Fotoboks trip={trip} results={ordered} />,
+    },
+    {
+      // F18b · Jeres Wrapped samlet: polaroidet fremkaldes og bliver et holokort.
+      key: "samlet",
+      theme: "peach",
+      content: <Samlet trip={trip} results={ordered} highlights={h} />,
       end: true,
     },
   ];
