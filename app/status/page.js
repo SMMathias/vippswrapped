@@ -8,7 +8,6 @@ import { useNow } from "../use-now";
 import { TRIP_SLUG } from "@/lib/supabase";
 import { canNudge, nameOf, owedHeading, tripTotal, waitingFor, waitingNames } from "@/lib/status";
 import { formatKr } from "@/lib/format";
-import { play, unlockAudio } from "@/lib/feedback";
 import { Avatar } from "@/components/avatar";
 import { CheckIcon } from "@/components/icons";
 import { DemoControls } from "@/components/demo-controls";
@@ -50,22 +49,6 @@ function Status({ trip }) {
   const myOutstanding = trip.balances.find((b) => b.member.id === me?.id)?.outstanding ?? 0;
   const myPayments = trip.payments.filter((p) => p.from_member === me?.id);
   const paymentsToMe = trip.payments.filter((p) => p.to_member === me?.id);
-
-  async function pay(p) {
-    unlockAudio(); // i klikket, så tikket må spille, når svaret kommer
-    const { ok } = await run(
-      p.id,
-      "pay_payment",
-      { p_payment_id: p.id },
-      "Betalingen kunne ikke gennemføres."
-    );
-    // Let tik, når betalingen er gået igennem: et skridt tættere på Wrapped (H2).
-    // "Betalt" med flueben står som tekst, så tikket er kun ekstra.
-    if (ok) {
-      play("tick");
-      setNotice(`Du har betalt ${nameOf(trip, p.to_member)} ${formatKr(p.amount)}`);
-    }
-  }
 
   async function nudge(p) {
     const { ok } = await run(
@@ -128,18 +111,17 @@ function Status({ trip }) {
                           <CheckIcon /> Betalt
                         </span>
                       ) : (
-                        <button
-                          type="button"
+                        // F06: "Betal" åbner betal-skærmen for netop denne betaling.
+                        <Link
+                          href={`/betal/${p.id}`}
                           className={`btn btn-primary ${styles.smallBtn}`}
-                          disabled={busy !== null}
-                          onClick={() => pay(p)}
                         >
-                          {busy === p.id ? "Betaler …" : "Betal"}
+                          Betal
                           <span className="visually-hidden">
                             {" "}
                             {formatKr(p.amount)} til {to}
                           </span>
-                        </button>
+                        </Link>
                       )}
                     </li>
                   );
