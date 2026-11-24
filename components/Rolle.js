@@ -8,9 +8,12 @@ import { objectSrc } from "@/lib/categories";
 import { TZ, formatKr } from "@/lib/format";
 import { nameOf } from "@/lib/status";
 import Bankdirektoren from "@/components/roller/Bankdirektoren";
+import Chaufforen from "@/components/roller/Chaufforen";
 import Kaffejunkien from "@/components/roller/Kaffejunkien";
 import Natteravnen from "@/components/roller/Natteravnen";
+import Passageren from "@/components/roller/Passageren";
 import Proviantmesteren from "@/components/roller/Proviantmesteren";
+import Skyldneren from "@/components/roller/Skyldneren";
 import Snackfiend from "@/components/roller/Snackfiend";
 import Sneglen from "@/components/roller/Sneglen";
 import styles from "./Rolle.module.css";
@@ -50,6 +53,7 @@ export const PAGES = {
     label: "Taxameter",
     kr: true,
     caption: "brugt på transport",
+    Motif: Chaufforen,
   },
   kaffejunkien: {
     theme: "peach",
@@ -72,6 +76,7 @@ export const PAGES = {
     kr: true,
     caption: "skyldte mest, og betalte det hele",
     payments: true,
+    Motif: Skyldneren,
   },
   sneglen: {
     theme: "peach",
@@ -86,6 +91,7 @@ export const PAGES = {
     label: "Lagt ud",
     kr: true,
     caption: "lagt ud på turen",
+    Motif: Passageren,
   },
 };
 

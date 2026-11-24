@@ -1,0 +1,72 @@
+/* Chaufføren: bakker, en vej med striber og en orange bil. */
+.road {
+  position: absolute;
+  inset: 0;
+}
+
+.hills {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 70px;
+  height: 90px;
+  border-radius: 50% 50% 0 0;
+  background: #ffcfba;
+}
+
+.lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 76px;
+  overflow: hidden;
+  background: var(--purple-800);
+}
+
+/* Striberne er én lang baggrund, der skubbes til venstre. */
+.dashes {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 300%;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, var(--orange-50) 0 34px, transparent 34px 60px);
+}
+
+.car {
+  position: absolute;
+  left: calc(50% - 100px);
+  bottom: 50px;
+  width: 200px;
+  transform-origin: 50% 100%;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.body {
+  fill: var(--orange-500);
+  stroke: #2a1d55;
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.window {
+  fill: var(--purple-50);
+  stroke: #2a1d55;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.tyre {
+  fill: #2a1d55;
+}
+
+.spokes {
+  stroke: var(--purple-50);
+  stroke-width: 3;
+}

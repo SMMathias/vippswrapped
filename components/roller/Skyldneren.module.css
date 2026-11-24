@@ -1,0 +1,98 @@
+/* Skyldneren: en lilla kuvert med en hvid regning, der kommer op. */
+.desk {
+  position: absolute;
+  inset: 0;
+}
+
+.envelope {
+  position: absolute;
+  left: calc(50% - 130px);
+  bottom: 24px;
+  width: 260px;
+  height: 160px;
+  perspective: 600px;
+}
+
+.back,
+.front,
+.flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.back {
+  inset: 0;
+  border-radius: 12px;
+  background: var(--purple-800);
+}
+
+/* Forsiden er en V-form, så regningen ses gå ned i kuverten. */
+.front {
+  z-index: 2;
+  bottom: 0;
+  height: 110px;
+  border-radius: 0 0 12px 12px;
+  background: var(--purple-600);
+  clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+}
+
+.flap {
+  top: 0;
+  height: 90px;
+  background: #3a2b63;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+}
+
+.bill {
+  position: absolute;
+  z-index: 1;
+  left: 18px;
+  right: 18px;
+  top: 14px;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 14px 12px 16px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--purple-800);
+  box-shadow: 0 8px 20px rgba(30, 15, 60, 0.2);
+}
+
+.head {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.bill b {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* Knappen: lilla "Betal", som det grønne "Betalt" lægger sig over. */
+.pay {
+  position: relative;
+  margin-top: 6px;
+  padding: 8px 28px;
+  border-radius: 999px;
+  background: var(--purple-600);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.paid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: var(--green-700);
+}
