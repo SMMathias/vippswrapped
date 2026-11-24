@@ -9,6 +9,7 @@ import { rpcErrorMessage } from "@/lib/trip";
 import { matchCategory, objectSrc } from "@/lib/categories";
 import { splitEvenly } from "@/lib/split";
 import { formatDateTime, formatKr } from "@/lib/format";
+import { unlockAudio } from "@/lib/feedback";
 import { Avatar } from "@/components/avatar";
 import { TopBar } from "@/components/top-bar";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
@@ -77,6 +78,9 @@ function SharePurchaseForm({ trip }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    // Browsere tillader kun lyd efter et tryk. Lyden forberedes her, så bumpet
+    // kan spille, når udgiften lander på bordet på gruppeskærmen.
+    unlockAudio();
 
     // Samme tjek som i databasen, så fejlen vises med det samme.
     if (!purchase) {

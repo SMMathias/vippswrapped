@@ -44,3 +44,23 @@ export function BackIcon() {
     </svg>
   );
 }
+
+// Højttaler. Fra: streget over. Ikonet er pynt: knappen har teksten "Lyd" og aria-pressed.
+export function SoundIcon({ on = true }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" />
+      {on ? (
+        <path
+          d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      ) : (
+        <path d="M16 9l6 6M22 9l-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      )}
+    </svg>
+  );
+}

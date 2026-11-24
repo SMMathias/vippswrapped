@@ -1,0 +1,27 @@
+/* 48 × 48 px touch-mål som tilbage-pilen i top-baren. */
+.toggle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 48px;
+  height: 48px;
+  margin-right: -12px;
+  justify-self: end;
+  border: none;
+  border-radius: 12px;
+  background: none;
+  color: var(--color-text-accent);
+  cursor: pointer;
+}
+
+/* Fra: samme farve, men ikonet er streget over. Teksten "Lyd" står fast,
+   og tilstanden ligger i aria-pressed og ikonet, ikke kun i farven. */
+.toggle[aria-pressed="false"] {
+  color: var(--color-text-secondary);
+}
+
+.toggle:disabled {
+  cursor: not-allowed;
+}
