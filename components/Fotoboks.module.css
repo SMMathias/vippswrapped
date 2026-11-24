@@ -1,0 +1,254 @@
+/* F18 · fotoboksen: lys lilla med orange forhæng i siderne. */
+.booth {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+}
+
+/* Forhænget: orange striber yderst til venstre og højre. */
+.curtain {
+  position: absolute;
+  inset: -64px -16px -24px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, var(--orange-500) 0 6px, var(--orange-700) 6px 9px) left / 18px
+      100% no-repeat,
+    repeating-linear-gradient(90deg, var(--orange-500) 0 6px, var(--orange-700) 6px 9px) right /
+      18px 100% no-repeat;
+}
+
+.sticker {
+  align-self: flex-start;
+  margin-left: 8px;
+  padding: 6px 10px 5px;
+  background: var(--purple-800);
+  color: var(--orange-50);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+/* ---------- Søgeren ---------- */
+
+.viewfinder {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 8px;
+}
+
+.lamps {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lamps i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  box-shadow: 0 0 12px var(--orange-500);
+}
+
+.picture {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  height: 400px;
+  overflow: hidden;
+  border: 14px solid var(--purple-800);
+  border-radius: 28px;
+  text-align: center;
+}
+
+.bigAvatar {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--purple-800);
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.prop {
+  position: absolute;
+  top: 70px;
+  right: 40px;
+}
+
+.role {
+  margin-top: 16px;
+  padding: 0 8px;
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.role span,
+.text b span {
+  display: block;
+}
+
+.who {
+  position: absolute;
+  bottom: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.counter {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.flash {
+  position: absolute;
+  inset: -20px;
+  border-radius: 32px;
+  background: var(--white);
+  pointer-events: none;
+}
+
+/* ---------- Strimlen ---------- */
+
+.strips {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.strip {
+  display: grid;
+  gap: 6px;
+  width: 240px;
+  margin: 0;
+  padding: 8px 8px 0;
+  list-style: none;
+  background: var(--white);
+  box-shadow: 0 14px 30px rgba(30, 15, 60, 0.25);
+}
+
+.strips[data-columns="2"] .strip {
+  width: 168px;
+}
+
+.frame {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  overflow: hidden;
+}
+
+.frame[data-late] {
+  filter: blur(1.5px);
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--purple-800);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.frame img {
+  flex: none;
+}
+
+.text {
+  display: grid;
+  min-width: 0;
+}
+
+.text b {
+  font-size: 15px;
+  line-height: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+.text small {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.strips[data-columns="2"] .text b {
+  font-size: 12px;
+  line-height: 13px;
+}
+
+.strips[data-columns="2"] .frame img {
+  display: none;
+}
+
+.label {
+  padding: 8px 0 10px;
+  text-align: center;
+  color: var(--purple-800);
+  font-size: 13px;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* Billedernes farver, på skift. Rollenavnet har kortets accentfarve. */
+.orange {
+  background: var(--orange-500);
+  color: var(--black);
+}
+
+.orange .role,
+.orange b {
+  color: var(--purple-800);
+}
+
+.lilac {
+  background: var(--purple-50);
+  color: var(--purple-800);
+}
+
+.purple {
+  background: var(--purple-600);
+  color: var(--white);
+}
+
+.peach {
+  background: var(--orange-50);
+  color: var(--purple-800);
+}
+
+.lilac .role,
+.lilac b,
+.purple .role,
+.purple b,
+.peach .role,
+.peach b {
+  color: var(--orange-500);
+}
