@@ -9,6 +9,8 @@ import { TZ, formatKr } from "@/lib/format";
 import { nameOf } from "@/lib/status";
 import Bankdirektoren from "@/components/roller/Bankdirektoren";
 import Proviantmesteren from "@/components/roller/Proviantmesteren";
+import Snackfiend from "@/components/roller/Snackfiend";
+import Sneglen from "@/components/roller/Sneglen";
 import styles from "./Rolle.module.css";
 
 // F14–F17 · Rollesiderne (prototype v19). Alle får deres egen side: navnet slår ned,
@@ -57,6 +59,7 @@ export const PAGES = {
     split: 5,
     label: "Madkøb",
     caption: "madkøb, flest af alle",
+    Motif: Snackfiend,
   },
   skyldneren: {
     theme: "lilac",
@@ -71,6 +74,7 @@ export const PAGES = {
     split: 0,
     caption: "betalte som den sidste",
     payments: true,
+    Motif: Sneglen,
   },
   passageren: {
     theme: "lilac",
