@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import Flyvere from "@/components/Flyvere";
 import Padlock from "@/components/Padlock";
 import Slutskaerm from "@/components/Slutskaerm";
 import { objectSrc } from "@/lib/categories";
 import { play } from "@/lib/feedback";
 import { nameOf } from "@/lib/status";
+import { assignRoles } from "@/lib/wrapped";
 import styles from "./Oplaasning.module.css";
 
 // F09 · Oplåsningen: det store øjeblik, når alle har betalt (prototype v19).
-// Beskeden kommer, hængelåsen revner tre gange og springer, og bag den
-// åbner nattehimlen med "Jeres Wrapped er åben".
+// Beskeden kommer, hængelåsen revner tre gange og springer, "Jeres Wrapped"
+// hvirvler forbi, turens ting flyver ud mod skærmen, og nattehimlen åbner.
 // Hvert trin har sin ventetid i ms. Reduceret bevægelse: slutskærmen med det samme.
 const steps = [
   { name: "start", wait: 300 },
@@ -21,6 +23,8 @@ const steps = [
   { name: "crack2", wait: 700 },
   { name: "crack3", wait: 800 },
   { name: "break", wait: 500 },
+  { name: "title", wait: 1500 },
+  { name: "fly", wait: 2300 },
   { name: "open" },
 ];
 const last = steps.length - 1;
@@ -43,6 +47,7 @@ export default function Oplaasning({ trip, onDone }) {
 
   const payer = lastPayer(trip);
   const items = [...new Set(trip.expenses.map((e) => objectSrc(e.category)))].slice(0, 8);
+  const roles = assignRoles(trip).map((r) => r.role.name);
 
   // Næste trin efter ventetiden. Reduceret bevægelse springer direkte til slutningen.
   useEffect(() => {
@@ -95,6 +100,28 @@ export default function Oplaasning({ trip, onDone }) {
           aria-hidden="true"
         />
       )}
+
+      {/* "Jeres Wrapped" hvirvler ind i 3D og forsvinder ind i midten igen. */}
+      {(name === "title" || name === "fly") && (
+        <div className={styles.center} aria-hidden="true">
+          <motion.p
+            className={styles.logo}
+            initial={{ opacity: 0 }}
+            animate={{
+              rotateX: [58, 40, 30, 50],
+              rotateZ: [220, 10, -25, -300],
+              scale: [3.2, 1.15, 0.95, 0.04],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{ duration: 3, times: [0, 0.35, 0.62, 1], ease: "easeInOut" }}
+            style={{ transformPerspective: 700 }}
+          >
+            <span>Jeres</span> Wrapped
+          </motion.p>
+        </div>
+      )}
+
+      {name === "fly" && <Flyvere items={items} labels={roles} />}
 
       {open && <Slutskaerm trip={trip} items={items} onDone={onDone} />}
 

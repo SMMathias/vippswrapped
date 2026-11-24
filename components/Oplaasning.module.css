@@ -81,6 +81,27 @@
   place-items: center;
 }
 
+/* "Jeres Wrapped", der hvirvler forbi, før slutskærmen. */
+.logo {
+  display: grid;
+  margin: 0;
+  font-size: 64px;
+  line-height: 64px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--orange-500);
+  text-shadow: 0 4px 0 #2a1d55;
+}
+
+.logo span {
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0.32em;
+  color: var(--orange-100);
+}
+
 .flash {
   position: absolute;
   inset: 0;
