@@ -46,6 +46,12 @@
    peach:  sort på #FCF0EA ≈ 18:1
    orange: sort på #FF5B24 ≈ 6,8:1 (hvid ville kun give ≈ 3,1:1)
    dark:   hvid på #483678 ≈ 10:1, orange rollenavn ≈ 3,3:1 (kun stor tekst) */
+/* Fokus skal kunne ses på alle temaer. Den lilla standard-ring forsvinder på
+   lilla og mørk baggrund, så her følger den tekstfarven (hvid eller sort). */
+.story :focus-visible {
+  outline-color: currentColor;
+}
+
 .purple {
   background: var(--color-bg-accent);
   color: var(--color-text-on-accent);
@@ -116,6 +122,7 @@
   width: 50%;
   border: none;
   background: transparent;
+  color: inherit; /* knapper arver ikke farve, og fokusringen bruger currentColor */
   cursor: pointer;
 }
 
@@ -127,8 +134,8 @@
   right: 0;
 }
 
-.prev:disabled,
-.next:disabled {
+.prev[aria-disabled="true"],
+.next[aria-disabled="true"] {
   cursor: default;
 }
 
