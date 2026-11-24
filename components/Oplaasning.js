@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { ease } from "@/lib/motion";
 import Flyvere from "@/components/Flyvere";
+import Galaxy from "@/components/Galaxy";
 import Padlock from "@/components/Padlock";
 import Slutskaerm from "@/components/Slutskaerm";
 import { objectSrc } from "@/lib/categories";
@@ -77,6 +78,7 @@ export default function Oplaasning({ trip, onDone }) {
         aria-hidden="true"
       >
         <div className={`${styles.sky} ${step >= breakStep ? styles.skyOpen : ""}`} />
+        <Galaxy open={step >= breakStep} />
       </motion.div>
 
       <motion.div
