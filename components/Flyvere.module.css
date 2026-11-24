@@ -1,0 +1,32 @@
+/* Alle tingene starter oven i hinanden midt på skærmen. */
+.flyers {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flyer {
+  grid-area: 1 / 1;
+}
+
+.flyer img {
+  display: block;
+  filter: drop-shadow(0 6px 8px rgba(10, 5, 30, 0.5));
+}
+
+/* Rollenavnene ser ud som klistermærker. */
+.label {
+  display: block;
+  padding: 4px 8px 3px;
+  background: var(--orange-500);
+  color: var(--black);
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

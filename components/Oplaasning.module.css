@@ -1,0 +1,145 @@
+/* F09 · oplåsningen. Beskeden kommer på den lyse app, og så åbner natten:
+   dyb lilla med stjerner og en galakse. */
+.screen {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 28px); /* hele skærmen minus studieprojekt-linjen */
+  overflow: hidden;
+  background: var(--color-bg-base);
+  color: var(--color-text-on-accent);
+}
+
+.night {
+  position: absolute;
+  inset: 0;
+  background: #140e2c;
+}
+
+/* Stjerner som små prikker i et mønster, og en galakse af farvede lysskyer. */
+.sky,
+.sky::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sky {
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 20%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 85% 70%, var(--orange-100) 50%, transparent 51%),
+    radial-gradient(1px 1px at 30% 80%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 55% 60%, #fff 50%, transparent 51%);
+  background-size: 160px 160px;
+}
+
+.sky::after {
+  content: "";
+  inset: -40%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 91, 36, 0.55),
+    rgba(90, 60, 186, 0.6),
+    rgba(252, 228, 216, 0.5),
+    rgba(72, 54, 120, 0.6),
+    rgba(255, 91, 36, 0.55)
+  );
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 900ms var(--motion-easing-standard), transform 1600ms var(--motion-easing-standard);
+  animation: spin 40s linear infinite;
+}
+
+.skyOpen::after {
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Beskeden, der kommer ned fra toppen som en notifikation. */
+.push {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 3;
+  display: grid;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 22px;
+  background: rgba(245, 245, 247, 0.96);
+  color: var(--color-text-primary);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* "Jeres Wrapped", der hvirvler forbi, før slutskærmen. */
+.logo {
+  display: grid;
+  margin: 0;
+  font-size: 64px;
+  line-height: 64px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--orange-500);
+  text-shadow: 0 4px 0 #2a1d55;
+}
+
+.logo span {
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0.32em;
+  color: var(--orange-100);
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: var(--white);
+  pointer-events: none;
+}
+
+.skip {
+  position: absolute;
+  right: 16px;
+  bottom: 24px;
+  z-index: 5;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(20, 14, 44, 0.55);
+  color: var(--white);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.skip:focus-visible {
+  outline: 3px solid var(--orange-500);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky::after {
+    animation: none;
+  }
+}

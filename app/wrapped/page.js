@@ -14,10 +14,13 @@ import Kvittering from "@/components/Kvittering";
 import { BackIcon, LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
+import Oplaasning from "@/components/Oplaasning";
 import styles from "./page.module.css";
 
 export default function WrappedPage() {
   const { trip, loading, error, reload } = useTrip();
+  // F09 kommer først. "Se Wrapped" (eller "Spring over" og så "Se Wrapped") åbner kortene.
+  const [opened, setOpened] = useState(false);
 
   if (!trip && loading) {
     return (
@@ -35,6 +38,7 @@ export default function WrappedPage() {
   }
   // H2: Wrapped er låst, indtil alle har betalt.
   if (trip.status !== "settled") return <Locked trip={trip} />;
+  if (!opened) return <Oplaasning trip={trip} onDone={() => setOpened(true)} />;
   return <Story trip={trip} />;
 }
 
