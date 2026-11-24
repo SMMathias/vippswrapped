@@ -1,0 +1,72 @@
+/* Sneglen: creme flade med et lilla ord, der skrives af slimsporet. */
+.garden {
+  position: absolute;
+  inset: 0;
+}
+
+.word {
+  position: absolute;
+  left: 16px;
+  bottom: 30px;
+  font-size: 120px;
+  line-height: 110px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: var(--purple-50);
+  -webkit-text-stroke: 4px var(--purple-800);
+}
+
+.snail {
+  position: absolute;
+  bottom: 34px;
+  width: 120px;
+  height: 80px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: inch 1.2s ease-in-out infinite;
+  transform-origin: 0 100%;
+}
+
+/* Sneglen strækker sig lidt, mens den kravler. */
+@keyframes inch {
+  50% {
+    scale: 1.06 0.96;
+  }
+}
+
+.body {
+  fill: #cfc4f7;
+  stroke: var(--purple-800);
+  stroke-width: 3;
+}
+
+.feelers {
+  fill: none;
+  stroke: var(--purple-800);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.shell {
+  fill: var(--orange-500);
+  stroke: var(--purple-800);
+  stroke-width: 3;
+}
+
+.spiral {
+  fill: none;
+  stroke: var(--purple-800);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svg {
+    animation: none;
+  }
+}

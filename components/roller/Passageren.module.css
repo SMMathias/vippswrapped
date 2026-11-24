@@ -1,0 +1,108 @@
+/* Passageren: et busvindue med bakker, der ruller forbi, og et sæde med personen. */
+.bus {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 0 30px, var(--purple-800) 30px);
+}
+
+.window {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 50px;
+  height: 140px;
+  overflow: hidden;
+  border: 6px solid #2a1d55;
+  border-radius: 26px;
+  background: linear-gradient(#fce4d8, #ffb08f);
+}
+
+.sun {
+  position: absolute;
+  top: 18px;
+  right: 40px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--orange-500);
+}
+
+/* Bakkerne er en bølget baggrund, der gentages. Den skubbes til venstre i det uendelige. */
+.hills {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  background-repeat: repeat-x;
+  animation: roll linear infinite;
+}
+
+.far {
+  height: 80px;
+  background-image: radial-gradient(70px 60px at 70px 80px, #b9a6f5 98%, transparent);
+  background-size: 140px 80px;
+  animation-duration: 9s;
+}
+
+.near {
+  height: 46px;
+  background-image: radial-gradient(50px 40px at 50px 46px, var(--purple-600) 98%, transparent);
+  background-size: 100px 46px;
+  animation-duration: 3s;
+}
+
+@keyframes roll {
+  to {
+    translate: -50% 0;
+  }
+}
+
+/* En lygtepæl suser forbi af og til. */
+.pole {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  width: 8px;
+  height: 120px;
+  background: #2a1d55;
+  animation: pass 2.4s linear infinite;
+}
+
+@keyframes pass {
+  to {
+    translate: -600px 0;
+  }
+}
+
+.seat {
+  position: absolute;
+  left: calc(50% - 70px);
+  bottom: -20px;
+  width: 140px;
+  height: 70px;
+  border-radius: 24px 24px 0 0;
+  background: var(--orange-500);
+}
+
+.avatar {
+  position: absolute;
+  left: calc(50% - 26px);
+  top: -30px;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid var(--orange-50);
+  background: var(--color-bg-avatar);
+  color: var(--color-text-avatar);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hills,
+  .pole {
+    animation: none;
+  }
+}
