@@ -72,7 +72,6 @@ export default function Fotoboks({ trip, results }) {
 
   return (
     <div className={styles.booth}>
-      <i className={styles.curtain} aria-hidden="true" />
       <p className={styles.sticker}>Holdet</p>
 
       {shot < count ? (
