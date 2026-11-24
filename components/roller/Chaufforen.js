@@ -26,9 +26,10 @@ export default function Chaufforen() {
 
       <motion.div
         className={styles.car}
-        initial={{ x: -320 }}
-        animate={{ x: 0 }}
-        transition={{ delay: start, duration: drive, ease: "easeOut" }}
+        // Usynlig, indtil den kører, så bagenden ikke stikker ind i venstre kant på brede skærme.
+        initial={{ x: -320, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: start, duration: drive, ease: "easeOut", opacity: { delay: start, duration: 0.1 } }}
       >
         <svg viewBox="0 0 200 104" className={styles.svg}>
           <path

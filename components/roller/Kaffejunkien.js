@@ -17,9 +17,15 @@ export default function Kaffejunkien({ result }) {
         {Array.from({ length: cups }, (_, index) => (
           <motion.li
             key={index}
-            initial={{ x: -320, rotate: -20 }}
-            animate={{ x: 0, rotate: 0 }}
-            transition={{ delay: at(index), duration: 0.45, ease: ease.bump }}
+            // Usynlig, indtil den glider ind, så koppen ikke venter ude til venstre på skærmen.
+            initial={{ x: -320, rotate: -20, opacity: 0 }}
+            animate={{ x: 0, rotate: 0, opacity: 1 }}
+            transition={{
+              delay: at(index),
+              duration: 0.45,
+              ease: ease.bump,
+              opacity: { delay: at(index), duration: 0.1 },
+            }}
           >
             <span className={styles.cup}>
               <motion.i
