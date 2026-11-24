@@ -27,30 +27,6 @@
   color: var(--color-text-accent);
 }
 
-/* B16: højdepunkter på hvide kort */
-.highlights {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-  list-style: none;
-}
-
-.highlight {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  border-radius: 16px;
-  background: var(--color-bg-base);
-  color: var(--color-text-primary);
-}
-
-.highlightText {
-  display: flex;
-  flex-direction: column;
-}
-
 /* B17: rolle-reveal */
 .role {
   display: flex;

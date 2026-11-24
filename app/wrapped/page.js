@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTrip } from "../trip-provider";
 import { assignRoles, highlights } from "@/lib/wrapped";
-import { bannerState, nameOf } from "@/lib/status";
+import { bannerState } from "@/lib/status";
 import { objectSrc } from "@/lib/categories";
-import { formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
 import DagForDag from "@/components/DagForDag";
 import Historie from "@/components/Historie";
@@ -16,6 +15,7 @@ import { LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
+import TopKategorier from "@/components/TopKategorier";
 import styles from "./page.module.css";
 
 export default function WrappedPage() {
@@ -87,31 +87,10 @@ function buildCards(trip) {
       content: <DagForDag trip={trip} total={h.total} />,
     },
     {
-      key: "highlights",
+      // F12b · Top kategorier: tårne af klodser, ét pr. køb.
+      key: "kategorier",
       theme: "orange",
-      content: (
-        <>
-          <h2 className="text-display-md">Højdepunkter</h2>
-          <ul className={styles.highlights}>
-            {h.mostExpensive && (
-              <Highlight
-                label="Dyreste køb"
-                title={h.mostExpensive.title}
-                text={`${formatKr(h.mostExpensive.amount)} · ${nameOf(trip, h.mostExpensive.paid_by)}`}
-                object={h.mostExpensive}
-              />
-            )}
-            {h.popular && (
-              <Highlight
-                label="Mest populære kategori"
-                title={h.popular.label}
-                text={`${h.popular.count} af ${h.count} køb · ${formatKr(h.popular.total)}`}
-                object={h.popular.object}
-              />
-            )}
-          </ul>
-        </>
-      ),
+      content: <TopKategorier trip={trip} total={h.total} />,
     },
     ...ordered.map((r) => ({
       key: `role-${r.member.id}`,
@@ -142,19 +121,6 @@ function buildCards(trip) {
       end: true,
     },
   ];
-}
-
-function Highlight({ label, title, text, object }) {
-  return (
-    <li className={styles.highlight}>
-      {object && <Image src={objectSrc(object.category)} alt="" width={64} height={64} />}
-      <span className={styles.highlightText}>
-        <span className="text-caption-md">{label.toUpperCase()}</span>
-        <span className="text-heading-md">{title}</span>
-        <span className="text-body-sm">{text}</span>
-      </span>
-    </li>
-  );
 }
 
 // B17: rolle-reveal. Objektet, der "beviser" rollen, navnet og tallet bag.
