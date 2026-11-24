@@ -8,6 +8,7 @@ import { useNow } from "../use-now";
 import { TRIP_SLUG } from "@/lib/supabase";
 import { canNudge, joinNames, nameOf, tripTotal, waitingFor } from "@/lib/status";
 import { formatKr } from "@/lib/format";
+import { play, unlockAudio } from "@/lib/feedback";
 import { Avatar } from "@/components/avatar";
 import { CheckIcon, LockIcon } from "@/components/icons";
 import { DemoControls } from "@/components/demo-controls";
@@ -43,8 +44,17 @@ function Status({ trip }) {
   const myPayments = trip.payments.filter((p) => p.from_member === me?.id);
   const paymentsToMe = trip.payments.filter((p) => p.to_member === me?.id);
 
-  function pay(p) {
-    run(p.id, "pay_payment", { p_payment_id: p.id }, "Betalingen kunne ikke gennemføres.");
+  async function pay(p) {
+    unlockAudio(); // i klikket, så tikket må spille, når svaret kommer
+    const { ok } = await run(
+      p.id,
+      "pay_payment",
+      { p_payment_id: p.id },
+      "Betalingen kunne ikke gennemføres."
+    );
+    // Let tik, når betalingen er gået igennem: et skridt tættere på Wrapped (H2).
+    // "Betalt" med flueben står som tekst, så tikket er kun ekstra.
+    if (ok) play("tick");
   }
 
   async function nudge(p) {

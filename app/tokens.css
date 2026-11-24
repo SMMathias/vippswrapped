@@ -77,6 +77,13 @@
   --motion-easing-standard: cubic-bezier(0, 0, 0.58, 1);
   --motion-easing-in-out: cubic-bezier(0.42, 0, 0.58, 1);
   --motion-easing-bump: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Lyd og haptik (Standard). Læses af lib/feedback.js. Figma: sound/…, haptic/… */
+  --sound-volume: 0.2;
+  --sound-duration-bump: 180ms;
+  --sound-duration-tick: 60ms;
+  --haptic-duration-bump: 20ms;
+  --haptic-duration-tick: 10ms;
 }
 
 /* Motion (Reduceret): følger brugerens indstilling for reduceret bevægelse */
@@ -88,6 +95,10 @@
     --motion-duration-slow: 150ms;
     --motion-duration-slower: 150ms;
     --motion-easing-bump: var(--motion-easing-standard);
+    /* Ingen lyd eller vibration ved reduceret bevægelse */
+    --sound-volume: 0;
+    --haptic-duration-bump: 0ms;
+    --haptic-duration-tick: 0ms;
   }
 }
 

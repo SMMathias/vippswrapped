@@ -1,17 +1,33 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTrip } from "./trip-provider";
 import { Avatar } from "@/components/avatar";
 import { DemoControls } from "@/components/demo-controls";
+import { SoundToggle } from "@/components/sound-toggle";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
 import { WrappedBanner } from "@/components/wrapped-banner";
 import { formatDateRange, formatDateTime, formatKr } from "@/lib/format";
+import { playOnce } from "@/lib/feedback";
 import styles from "./page.module.css";
+
+// Tingen rammer bordet ca. midt i animationen (--motion-duration-slower er 500 ms).
+const LANDING_DELAY_MS = 250;
 
 export default function GroupPage() {
   const { trip, loading, error, reload, lastAddedId } = useTrip();
+
+  // Blødt bump, når den nye udgift lander på bordet (H1). Spilles midt i
+  // landings-animationen og kun én gang pr. udgift. Teksten "… ligger nu på
+  // bordet" nedenfor bærer informationen, så lyden er kun ekstra.
+  const landedId = trip?.expenses.some((e) => e.id === lastAddedId) ? lastAddedId : null;
+  useEffect(() => {
+    if (!landedId) return;
+    const timer = setTimeout(() => playOnce(`landed-${landedId}`, "bump"), LANDING_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [landedId]);
 
   // UI states: første gang er der ingen data endnu.
   if (!trip && loading) return <LoadingState />;
@@ -30,10 +46,13 @@ export default function GroupPage() {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <h1 className="text-heading-lg">{trip.name}</h1>
-        <p className={`text-body-md ${styles.secondary}`}>
-          {formatDateRange(trip.startsOn, trip.endsOn)} · {trip.members.length} personer
-        </p>
+        <div className={styles.headerText}>
+          <h1 className="text-heading-lg">{trip.name}</h1>
+          <p className={`text-body-md ${styles.secondary}`}>
+            {formatDateRange(trip.startsOn, trip.endsOn)} · {trip.members.length} personer
+          </p>
+        </div>
+        <SoundToggle />
       </header>
 
       <WrappedBanner trip={trip} />
