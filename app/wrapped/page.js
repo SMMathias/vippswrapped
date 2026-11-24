@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useTrip } from "../trip-provider";
 import { assignRoles, highlights } from "@/lib/wrapped";
-import { bannerState, nameOf } from "@/lib/status";
+import { bannerState } from "@/lib/status";
 import { objectSrc } from "@/lib/categories";
-import { formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
+import DagForDag from "@/components/DagForDag";
+import Historie from "@/components/Historie";
 import Kvittering from "@/components/Kvittering";
-import { BackIcon, LockIcon } from "@/components/icons";
+import { LockIcon } from "@/components/icons";
 import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
+import TopKategorier from "@/components/TopKategorier";
+import TopTre from "@/components/TopTre";
 import styles from "./page.module.css";
 
 export default function WrappedPage() {
@@ -39,7 +41,7 @@ export default function WrappedPage() {
   // H2: Wrapped er låst, indtil alle har betalt.
   if (trip.status !== "settled") return <Locked trip={trip} />;
   if (!opened) return <Oplaasning trip={trip} onDone={() => setOpened(true)} />;
-  return <Story trip={trip} />;
+  return <Historie cards={buildCards(trip)} title={trip.name} />;
 }
 
 function Locked({ trip }) {
@@ -80,51 +82,22 @@ function buildCards(trip) {
       content: <Kvittering trip={trip} total={h.total} perPerson={h.perPerson} />,
     },
     {
-      key: "items",
+      // F12 · Turen dag for dag: kurven over, hvad I brugte hver dag.
+      key: "dage",
       theme: "peach",
-      content: (
-        <>
-          <h2 className="text-display-md">Det her købte I</h2>
-          <ul className={styles.grid}>
-            {trip.expenses.map((e) => (
-              <li key={e.id} className={styles.gridItem}>
-                <Image src={objectSrc(e.category)} alt="" width={88} height={88} />
-                <span className="text-label-md">{e.title}</span>
-                <span className="text-caption-md">
-                  {formatKr(e.amount)} · {nameOf(trip, e.paid_by)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      ),
+      content: <DagForDag trip={trip} total={h.total} />,
     },
     {
-      key: "highlights",
+      // F12b · Top kategorier: tårne af klodser, ét pr. køb.
+      key: "kategorier",
       theme: "orange",
-      content: (
-        <>
-          <h2 className="text-display-md">Højdepunkter</h2>
-          <ul className={styles.highlights}>
-            {h.mostExpensive && (
-              <Highlight
-                label="Dyreste køb"
-                title={h.mostExpensive.title}
-                text={`${formatKr(h.mostExpensive.amount)} · ${nameOf(trip, h.mostExpensive.paid_by)}`}
-                object={h.mostExpensive}
-              />
-            )}
-            {h.popular && (
-              <Highlight
-                label="Mest populære kategori"
-                title={h.popular.label}
-                text={`${h.popular.count} af ${h.count} køb · ${formatKr(h.popular.total)}`}
-                object={h.popular.object}
-              />
-            )}
-          </ul>
-        </>
-      ),
+      content: <TopKategorier trip={trip} total={h.total} />,
+    },
+    {
+      // F13 · Jeres 3 dyreste køb: luppen over bonen fra F11.
+      key: "top3",
+      theme: "lilac",
+      content: <TopTre trip={trip} />,
     },
     ...ordered.map((r) => ({
       key: `role-${r.member.id}`,
@@ -157,19 +130,6 @@ function buildCards(trip) {
   ];
 }
 
-function Highlight({ label, title, text, object }) {
-  return (
-    <li className={styles.highlight}>
-      {object && <Image src={objectSrc(object.category)} alt="" width={64} height={64} />}
-      <span className={styles.highlightText}>
-        <span className="text-caption-md">{label.toUpperCase()}</span>
-        <span className="text-heading-md">{title}</span>
-        <span className="text-body-sm">{text}</span>
-      </span>
-    </li>
-  );
-}
-
 // B17: rolle-reveal. Objektet, der "beviser" rollen, navnet og tallet bag.
 function RoleReveal({ result }) {
   const { member, role, detail, object } = result;
@@ -195,131 +155,5 @@ function RoleReveal({ result }) {
       <h2 className={`text-display-lg ${styles.roleName}`}>{role.name}</h2>
       <p className="text-label-lg">{detail}</p>
     </div>
-  );
-}
-
-// ---------- Navigation: tryk, swipe og piletaster ----------
-
-function Story({ trip }) {
-  const router = useRouter();
-  const cards = buildCards(trip);
-  const last = cards.length - 1;
-  const [index, setIndex] = useState(0);
-  const pointerStart = useRef(null);
-  const swiped = useRef(false);
-
-  const go = (delta) => setIndex((i) => Math.min(last, Math.max(0, i + delta)));
-
-  // Piletaster, Home/End og Escape. Ingen automatisk afspilning, så der er intet at pause.
-  // Taster med Ctrl/Alt/Cmd ignoreres, så browserens egne genveje (fx Alt+← = tilbage) virker.
-  useEffect(() => {
-    function onKey(event) {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (event.key === "ArrowRight") setIndex((i) => Math.min(last, i + 1));
-      else if (event.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
-      else if (event.key === "Home") setIndex(0);
-      else if (event.key === "End") setIndex(last);
-      else if (event.key === "Escape") router.push("/");
-      else return;
-      event.preventDefault();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [last, router]);
-
-  // Swipe: mere end 50 px vandret tæller som et swipe og ikke et tryk.
-  function onPointerDown(event) {
-    pointerStart.current = event.clientX;
-    swiped.current = false;
-  }
-  function onPointerUp(event) {
-    if (pointerStart.current === null) return;
-    const dx = event.clientX - pointerStart.current;
-    pointerStart.current = null;
-    if (Math.abs(dx) > 50) {
-      swiped.current = true;
-      go(dx < 0 ? 1 : -1);
-    }
-  }
-  // Et swipe må ikke også tælle som et tryk på en af tap-zonerne.
-  function tap(delta) {
-    if (swiped.current) {
-      swiped.current = false;
-      return;
-    }
-    go(delta);
-  }
-
-  const card = cards[index];
-
-  return (
-    <main
-      className={`${styles.story} ${styles[card.theme]}`}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-    >
-      {/* Fremdrift som i B14. Pynt: teksten "Kort x af y" står i kortets label. */}
-      <div className={styles.progress} aria-hidden="true">
-        {cards.map((c, i) => (
-          <span key={c.key} className={i <= index ? styles.progressDone : ""} />
-        ))}
-      </div>
-
-      {/* Test runde 2: tydelig vej tilbage. Pil og tekst øverst til venstre som
-          i resten af appen (top-baren), i stedet for "Luk" til højre. */}
-      <div className={styles.bar}>
-        <Link href="/" className={`text-label-lg ${styles.close}`}>
-          <BackIcon />
-          Til turen
-        </Link>
-        <span className="text-label-md">{trip.name}</span>
-      </div>
-
-      {/* Tap-zoner: venstre halvdel tilbage, højre halvdel frem (som stories). */}
-      {/* aria-disabled i stedet for disabled: en knap med disabled mister fokus,
-          så tastaturbrugere ville "falde ud" på første og sidste kort. */}
-      <button
-        type="button"
-        className={styles.prev}
-        onClick={() => tap(-1)}
-        aria-disabled={index === 0}
-      >
-        <span className="visually-hidden">Forrige kort</span>
-      </button>
-      <button
-        type="button"
-        className={styles.next}
-        onClick={() => tap(1)}
-        aria-disabled={index === last}
-      >
-        <span className="visually-hidden">Næste kort</span>
-      </button>
-
-      {/* key: kortet bygges forfra ved hvert skift, så animationen kører igen. */}
-      <section
-        key={card.key}
-        className={styles.card}
-        aria-roledescription="kort"
-        aria-label={`Kort ${index + 1} af ${cards.length}`}
-        aria-live="polite"
-      >
-        {card.content}
-
-        {index === 0 && (
-          <p className={`text-caption-md ${styles.hint}`}>Tryk, swipe eller brug piletasterne</p>
-        )}
-
-        {card.end && (
-          <div className={styles.endActions}>
-            <button type="button" className="btn btn-secondary" onClick={() => setIndex(0)}>
-              Se igen
-            </button>
-            <Link href="/" className={`btn ${styles.endPrimary}`}>
-              Til turen
-            </Link>
-          </div>
-        )}
-      </section>
-    </main>
   );
 }

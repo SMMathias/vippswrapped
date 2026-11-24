@@ -1,0 +1,118 @@
+/* F12 · dag for dag. Lys creme flade med en lilla kurve og orange til den dyreste dag. */
+.scene {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  color: var(--purple-800);
+}
+
+.sticker {
+  align-self: flex-start;
+  padding: 6px 10px 5px;
+  background: var(--purple-800);
+  color: var(--orange-50);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+.title {
+  margin-top: 8px;
+  font-size: 64px;
+  line-height: 60px;
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.sub {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+/* Kurven og tingene. Tingene placeres i procent af kurvens kasse. */
+.chart {
+  position: relative;
+  height: 260px; /* samme forhold som kurvens viewBox, så stregen ikke strækkes */
+  margin-top: auto;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.line {
+  fill: none;
+  stroke: var(--purple-800);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.best {
+  fill: rgba(255, 91, 36, 0.18);
+}
+
+.item {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  translate: -50% -100%;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.item img {
+  display: block;
+  filter: drop-shadow(0 4px 4px rgba(30, 15, 60, 0.25));
+}
+
+/* Dagene under kurven. Den dyreste dag er orange. */
+.days {
+  display: flex;
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: 3px solid var(--purple-800);
+  list-style: none;
+}
+
+.days li {
+  flex: 1;
+  display: grid;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.days b {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 800;
+}
+
+.days b:first-child {
+  text-transform: uppercase;
+}
+
+.days .biggest {
+  color: var(--orange-700);
+}
+
+.sum {
+  margin: 12px 0 8px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.sum::first-letter {
+  text-transform: uppercase;
+}

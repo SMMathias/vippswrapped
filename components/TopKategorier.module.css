@@ -1,0 +1,111 @@
+/* F12b · top kategorier. Orange flade, tårne af klodser på en lilla streg. */
+.scene {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+}
+
+.sticker {
+  align-self: flex-start;
+  padding: 6px 10px 5px;
+  background: var(--purple-800);
+  color: var(--orange-50);
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+}
+
+.title {
+  margin-top: 8px;
+  font-size: 44px;
+  line-height: 44px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--purple-800);
+}
+
+/* Tårnene står på en fælles streg nederst. */
+.towers {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  margin: 24px 0 0;
+  padding: 0 0 8px;
+  border-bottom: 4px solid var(--purple-800);
+  list-style: none;
+}
+
+.towers li {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+}
+
+.amount {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tower {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.block {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--orange-50);
+  box-shadow: inset 0 0 0 2px var(--purple-800);
+}
+
+.win .block {
+  background: var(--purple-600);
+}
+
+.label {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -4px;
+  right: -4px;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.first {
+  align-self: center;
+  margin-bottom: 4px;
+  padding: 3px 6px 2px;
+  background: var(--purple-800);
+  color: var(--orange-50);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sum {
+  margin: 40px 0 8px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 800;
+}
