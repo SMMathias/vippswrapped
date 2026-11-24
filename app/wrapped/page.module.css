@@ -27,27 +27,6 @@
   color: var(--color-text-accent);
 }
 
-/* B15: tingene i et gitter */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px 8px;
-  margin-top: 16px;
-  list-style: none;
-}
-
-.gridItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.gridItem img {
-  width: 88px;
-  height: 88px;
-}
-
 /* B16: højdepunkter på hvide kort */
 .highlights {
   display: flex;

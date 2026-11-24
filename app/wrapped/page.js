@@ -9,6 +9,7 @@ import { bannerState, nameOf } from "@/lib/status";
 import { objectSrc } from "@/lib/categories";
 import { formatKr } from "@/lib/format";
 import { Avatar } from "@/components/avatar";
+import DagForDag from "@/components/DagForDag";
 import Historie from "@/components/Historie";
 import Kvittering from "@/components/Kvittering";
 import { LockIcon } from "@/components/icons";
@@ -80,24 +81,10 @@ function buildCards(trip) {
       content: <Kvittering trip={trip} total={h.total} perPerson={h.perPerson} />,
     },
     {
-      key: "items",
+      // F12 · Turen dag for dag: kurven over, hvad I brugte hver dag.
+      key: "dage",
       theme: "peach",
-      content: (
-        <>
-          <h2 className="text-display-md">Det her købte I</h2>
-          <ul className={styles.grid}>
-            {trip.expenses.map((e) => (
-              <li key={e.id} className={styles.gridItem}>
-                <Image src={objectSrc(e.category)} alt="" width={88} height={88} />
-                <span className="text-label-md">{e.title}</span>
-                <span className="text-caption-md">
-                  {formatKr(e.amount)} · {nameOf(trip, e.paid_by)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      ),
+      content: <DagForDag trip={trip} total={h.total} />,
     },
     {
       key: "highlights",
