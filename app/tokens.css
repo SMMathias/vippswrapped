@@ -13,6 +13,7 @@
   --orange-100: #fce4d8;
   --orange-500: #ff5b24;
   --orange-700: #c2552f;
+  --orange-800: #a54828;
   --green-500: #6e9f79;
   --green-700: #2c6b41;
 
@@ -33,7 +34,7 @@
   --color-text-accent: var(--purple-800);
   --color-text-on-accent: var(--white);
   --color-text-on-brand: var(--white);
-  --color-text-avatar: var(--orange-700);
+  --color-text-avatar: var(--orange-800); /* 4,84:1 på --color-bg-avatar (orange-700 gav kun 3,72:1) */
   --color-text-positive: var(--green-700);
   --color-text-negative: var(--purple-600);
   --color-border-default: var(--gray-300);

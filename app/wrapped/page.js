@@ -216,12 +216,18 @@ function Story({ trip }) {
 
   const go = (delta) => setIndex((i) => Math.min(last, Math.max(0, i + delta)));
 
-  // Piletaster og Escape. Ingen automatisk afspilning, så der er intet at pause.
+  // Piletaster, Home/End og Escape. Ingen automatisk afspilning, så der er intet at pause.
+  // Taster med Ctrl/Alt/Cmd ignoreres, så browserens egne genveje (fx Alt+← = tilbage) virker.
   useEffect(() => {
     function onKey(event) {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
       if (event.key === "ArrowRight") setIndex((i) => Math.min(last, i + 1));
       else if (event.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
+      else if (event.key === "Home") setIndex(0);
+      else if (event.key === "End") setIndex(last);
       else if (event.key === "Escape") router.push("/");
+      else return;
+      event.preventDefault();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -273,11 +279,13 @@ function Story({ trip }) {
       </div>
 
       {/* Tap-zoner: venstre halvdel tilbage, højre halvdel frem (som stories). */}
+      {/* aria-disabled i stedet for disabled: en knap med disabled mister fokus,
+          så tastaturbrugere ville "falde ud" på første og sidste kort. */}
       <button
         type="button"
         className={styles.prev}
         onClick={() => tap(-1)}
-        disabled={index === 0}
+        aria-disabled={index === 0}
       >
         <span className="visually-hidden">Forrige kort</span>
       </button>
@@ -285,7 +293,7 @@ function Story({ trip }) {
         type="button"
         className={styles.next}
         onClick={() => tap(1)}
-        disabled={index === last}
+        aria-disabled={index === last}
       >
         <span className="visually-hidden">Næste kort</span>
       </button>
