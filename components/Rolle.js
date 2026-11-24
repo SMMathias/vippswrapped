@@ -8,6 +8,8 @@ import { objectSrc } from "@/lib/categories";
 import { TZ, formatKr } from "@/lib/format";
 import { nameOf } from "@/lib/status";
 import Bankdirektoren from "@/components/roller/Bankdirektoren";
+import Kaffejunkien from "@/components/roller/Kaffejunkien";
+import Natteravnen from "@/components/roller/Natteravnen";
 import Proviantmesteren from "@/components/roller/Proviantmesteren";
 import Snackfiend from "@/components/roller/Snackfiend";
 import Sneglen from "@/components/roller/Sneglen";
@@ -32,6 +34,7 @@ export const PAGES = {
     split: 5,
     label: "Natkøb",
     caption: "køb mellem kl. 22 og 05",
+    Motif: Natteravnen,
   },
   proviantmesteren: {
     theme: "lilac",
@@ -53,6 +56,7 @@ export const PAGES = {
     split: 5,
     label: "Kaffer",
     caption: "kaffekøb, flest af alle",
+    Motif: Kaffejunkien,
   },
   snackfiend: {
     theme: "purple",

@@ -1,0 +1,95 @@
+/* Natteravnen: nattehimmel med stjerner, en måne og et stort ur. */
+.sky {
+  position: absolute;
+  inset: 0;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--orange-50);
+  box-shadow: 0 0 8px var(--orange-100);
+}
+
+.moon {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--orange-50);
+  box-shadow:
+    0 0 40px rgba(255, 240, 220, 0.6),
+    inset -14px -6px 0 #e9dcff;
+}
+
+/* Uret: en creme skive. Viserne drejer om midten (transform-origin i bunden). */
+.clock {
+  position: absolute;
+  left: calc(50% - 90px);
+  bottom: 44px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--orange-50);
+  border: 7px solid var(--purple-800);
+  box-shadow: 0 12px 30px rgba(10, 5, 30, 0.45);
+}
+
+.tick {
+  position: absolute;
+  left: calc(50% - 2px);
+  top: 6px;
+  width: 4px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--purple-800);
+  transform-origin: 50% 77px;
+}
+
+.hour,
+.minute {
+  position: absolute;
+  bottom: 50%;
+  border-radius: 6px;
+  transform-origin: 50% 100%;
+}
+
+.hour {
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 44px;
+  background: var(--purple-800);
+}
+
+.minute {
+  left: calc(50% - 2px);
+  width: 4px;
+  height: 66px;
+  background: var(--orange-500);
+}
+
+.pin {
+  position: absolute;
+  left: calc(50% - 8px);
+  top: calc(50% - 8px);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  border: 3px solid var(--purple-800);
+}
+
+.time {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
