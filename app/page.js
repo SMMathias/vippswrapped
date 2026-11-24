@@ -8,8 +8,10 @@ import { Avatar } from "@/components/avatar";
 import { DemoControls } from "@/components/demo-controls";
 import { SoundToggle } from "@/components/sound-toggle";
 import { EmptyState, ErrorState, LoadingState } from "@/components/states";
+import { TableObjects } from "@/components/table-objects";
 import { WrappedBanner } from "@/components/wrapped-banner";
 import { formatDateRange, formatDateTime, formatKr } from "@/lib/format";
+import { owedHeading, tripTotal } from "@/lib/status";
 import { playOnce } from "@/lib/feedback";
 import styles from "./page.module.css";
 
@@ -39,7 +41,7 @@ export default function GroupPage() {
   // Udgiften, der lige er delt fra "Tilføj udgift" (hvis der er en).
   const added = trip.expenses.find((e) => e.id === lastAddedId);
 
-  // Min saldo til statusrækken (B01: "Status 210 kr >").
+  // Mit eget beløb står stort øverst (test runde 2, TP3).
   const myOutstanding =
     trip.balances.find((b) => b.member.id === trip.me?.id)?.outstanding ?? 0;
 
@@ -57,14 +59,25 @@ export default function GroupPage() {
 
       <WrappedBanner trip={trip} />
 
-      <Link href="/status" className={styles.statusRow}>
-        <span className="text-label-lg">Status</span>
-        <span className={styles.grow} />
-        <BalanceText amount={myOutstanding} isMe />
-        <span aria-hidden="true" className={styles.chevron}>
-          ›
-        </span>
-      </Link>
+      {/* Bordet (prototype v19, F01): turens ting som 3D-objekter. Kun den nye ting lander.
+          Når turen er gjort op, er bordet ryddet: tingene ligger nu i Wrapped (F09b). */}
+      <section aria-labelledby="table-heading" className={styles.tableCard}>
+        <p className={styles.tableHead}>
+          <span id="table-heading" className="text-label-md">
+            Bordet
+          </span>
+          <span className="text-label-md">
+            {trip.status === "settled"
+              ? "Ryddet"
+              : `${trip.expenses.length} køb, ${formatKr(tripTotal(trip))}`}
+          </span>
+        </p>
+        {trip.status === "settled" ? (
+          <p className={`text-body-md ${styles.cleared}`}>Tingene ligger nu i jeres Wrapped.</p>
+        ) : (
+          <TableObjects expenses={trip.expenses} newId={lastAddedId} />
+        )}
+      </section>
 
       {/* Fejl ved genindlæsning: de gamle data bliver stående, og fejlen vises over dem. */}
       {error && (
@@ -79,6 +92,22 @@ export default function GroupPage() {
           {added.title} er delt med {added.shares.length} personer og ligger nu på bordet.
         </p>
       )}
+
+      {/* Dit eget beløb stort, og vejen til status og opgørelse. */}
+      <section aria-labelledby="owe-heading" className={styles.oweCard}>
+        <h2 id="owe-heading" className="text-label-md">
+          {owedHeading(trip.status, myOutstanding)}
+        </h2>
+        <p className={`text-display-md ${myOutstanding < 0 ? styles.negative : ""}`}>
+          {formatKr(Math.abs(myOutstanding))}
+        </p>
+        <Link href="/status" className={styles.statusLink}>
+          <span className="text-label-lg">Status og opgørelse</span>
+          <span aria-hidden="true" className={styles.chevron}>
+            ›
+          </span>
+        </Link>
+      </section>
 
       <section aria-labelledby="balances-heading" className={styles.section}>
         <h2 id="balances-heading" className="text-heading-sm">
@@ -136,7 +165,7 @@ export default function GroupPage() {
       {/* Som i B01: "Tilføj udgift" i bunden, mens turen er i gang. */}
       {trip.status === "open" && (
         <div className={styles.actions}>
-          <Link href="/tilfoej" className={`btn btn-secondary ${styles.addButton}`}>
+          <Link href="/tilfoej" className={`btn btn-primary ${styles.addButton}`}>
             <span className={styles.plus} aria-hidden="true">
               +
             </span>

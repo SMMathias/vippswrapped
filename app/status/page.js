@@ -6,7 +6,7 @@ import { useTrip } from "../trip-provider";
 import { useRpc } from "../use-rpc";
 import { useNow } from "../use-now";
 import { TRIP_SLUG } from "@/lib/supabase";
-import { canNudge, nameOf, tripTotal, waitingNames } from "@/lib/status";
+import { canNudge, nameOf, owedHeading, tripTotal, waitingNames } from "@/lib/status";
 import { formatKr } from "@/lib/format";
 import { play, unlockAudio } from "@/lib/feedback";
 import { Avatar } from "@/components/avatar";
@@ -78,7 +78,7 @@ function Status({ trip }) {
           (turen er i gang) eller det, du skal betale (efter opgørelsen). */}
       <section className={styles.summary} aria-labelledby="summary-heading">
         <h2 id="summary-heading" className="text-body-md">
-          {summaryHeading(trip.status, myOutstanding)}
+          {owedHeading(trip.status, myOutstanding)}
         </h2>
         <p className="text-display-md">{formatKr(Math.abs(myOutstanding))}</p>
         <dl className={styles.totalRow}>
@@ -192,13 +192,6 @@ function Status({ trip }) {
       <DemoControls />
     </div>
   );
-}
-
-// Overskrift over beløbet øverst. Fortegnet står i ord, ikke kun i farve.
-function summaryHeading(status, outstanding) {
-  if (outstanding === 0) return status === "open" ? "Du er i nul lige nu" : "Du er gjort op";
-  if (status === "open") return outstanding < 0 ? "Du skylder lige nu" : "Du får lige nu";
-  return outstanding < 0 ? "Du skal betale" : "Du får";
 }
 
 // B09: før opgørelsen. Hvem skylder hvem som bjælker + "Afslut og beregn".
