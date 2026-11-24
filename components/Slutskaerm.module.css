@@ -115,9 +115,12 @@
   opacity: 0.85;
 }
 
+/* Over 7 personer bryder rækken over på to linjer, så ingen bliver skåret af. */
 .people {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  row-gap: 10px;
   width: 100%;
   margin: 0;
   padding: 14px 12px;
