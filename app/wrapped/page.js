@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useTrip } from "../trip-provider";
 import { assignRoles, highlights } from "@/lib/wrapped";
 import { bannerState } from "@/lib/status";
-import { Avatar } from "@/components/avatar";
 import DagForDag from "@/components/DagForDag";
+import Fotoboks from "@/components/Fotoboks";
 import Historie from "@/components/Historie";
 import Kvittering from "@/components/Kvittering";
 import { LockIcon } from "@/components/icons";
@@ -14,6 +14,7 @@ import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
 import Rolle, { PAGES } from "@/components/Rolle";
+import Samlet from "@/components/Samlet";
 import TopKategorier from "@/components/TopKategorier";
 import TopTre from "@/components/TopTre";
 import styles from "./page.module.css";
@@ -105,26 +106,16 @@ function buildCards(trip) {
       content: <Rolle trip={trip} result={r} />,
     })),
     {
-      key: "group",
-      theme: "purple",
-      content: (
-        <>
-          <h2 className="text-display-md">Turen i roller</h2>
-          <ul className={styles.group}>
-            {roles.map((r) => (
-              <li key={r.member.id} className={styles.groupRow}>
-                <Avatar name={r.member.name} />
-                <span className={styles.groupText}>
-                  <span className="text-label-lg">
-                    {r.member.name} · {r.role.name}
-                  </span>
-                  <span className="text-body-sm">{r.detail}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      ),
+      // F18 · Holdet i fotoboksen: én person ad gangen, og til sidst printes strimlen.
+      key: "holdet",
+      theme: "lilac",
+      content: <Fotoboks trip={trip} results={ordered} />,
+    },
+    {
+      // F18b · Jeres Wrapped samlet: polaroidet fremkaldes og bliver et holokort.
+      key: "samlet",
+      theme: "peach",
+      content: <Samlet trip={trip} results={ordered} highlights={h} />,
       end: true,
     },
   ];
