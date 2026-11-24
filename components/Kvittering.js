@@ -91,9 +91,16 @@ export default function Kvittering({ trip, total, perPerson }) {
             key={e.id}
             className={styles.item}
             style={{ left: `${4 + index * 11}%` }}
-            initial={{ y: -700, rotate: (index % 2 ? 1 : -1) * 30 }}
-            animate={{ y: 0, rotate: ((index * 31) % 30) - 15 }}
-            transition={{ delay: firstLine + index * lineDelay, type: "spring", bounce: 0.45, duration: 0.9 }}
+            // Usynlig, indtil den skal falde, så tingene ikke hænger stille oppe på skærmen og venter.
+            initial={{ y: -700, opacity: 0, rotate: (index % 2 ? 1 : -1) * 30 }}
+            animate={{ y: 0, opacity: 1, rotate: ((index * 31) % 30) - 15 }}
+            transition={{
+              delay: reduceMotion ? 0 : firstLine + index * lineDelay,
+              type: "spring",
+              bounce: 0.45,
+              duration: reduceMotion ? 0 : 0.9,
+              opacity: { delay: reduceMotion ? 0 : firstLine + index * lineDelay, duration: 0.1 },
+            }}
             drag
             dragConstraints={floorRef}
             dragElastic={0.2}
