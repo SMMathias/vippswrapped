@@ -1,3 +1,8 @@
+/* Telefonformen. På mobilen gør den ingenting (display: contents), så siden er som før. */
+.phone {
+  display: contents;
+}
+
 .studyNote {
   position: sticky;
   top: 0;
@@ -16,4 +21,38 @@
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
+}
+
+/* På en computer: appen i en iPhone-form midt på skærmen, som i apple-insights.
+   Formen har iPhones forhold (9:19,5) og runde hjørner. Siden scroller inde i telefonen.
+   container-type: size gør, at --screen-height (100cqh) er telefonens højde, ikke vinduets. */
+@media (min-width: 48rem) {
+  body {
+    justify-content: center;
+    background: var(--color-bg-accent-strong);
+  }
+
+  .phone {
+    --screen-height: 100cqh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 48px);
+    max-height: 932px;
+    aspect-ratio: 9 / 19.5;
+    margin: 24px auto;
+    overflow-y: auto;
+    border-radius: 48px;
+    background: var(--color-bg-base);
+    box-shadow:
+      0 0 0 10px #1b1433,
+      0 30px 80px rgba(10, 5, 30, 0.5);
+    container-type: size;
+    contain: paint;
+    scrollbar-width: none;
+  }
+
+  .app {
+    max-width: none;
+  }
 }

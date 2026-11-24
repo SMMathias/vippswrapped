@@ -4,7 +4,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: calc(100dvh - 28px); /* hele skærmen minus studieprojekt-linjen */
+  min-height: calc(var(--screen-height, 100dvh) - 28px); /* hele skærmen minus studieprojekt-linjen */
   padding: 12px 16px 24px;
   overflow: hidden;
   touch-action: pan-y; /* vandret swipe håndteres af os, lodret scroll af browseren */
