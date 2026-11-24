@@ -3,6 +3,7 @@ import "./tokens.css";
 import "./globals.css";
 import styles from "./layout.module.css";
 import { TripProvider } from "./trip-provider";
+import MotionProvider from "@/components/MotionProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,7 +34,9 @@ export default function RootLayout({ children }) {
           Studieprojekt på EAAA. Ikke tilknyttet Vipps MobilePay.
         </aside>
         <TripProvider>
-          <div className={styles.app}>{children}</div>
+          <MotionProvider>
+            <div className={styles.app}>{children}</div>
+          </MotionProvider>
         </TripProvider>
       </body>
     </html>
