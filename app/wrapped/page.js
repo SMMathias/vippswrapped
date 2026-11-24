@@ -16,6 +16,7 @@ import { ErrorState, LoadingState } from "@/components/states";
 import { TopBar } from "@/components/top-bar";
 import Oplaasning from "@/components/Oplaasning";
 import TopKategorier from "@/components/TopKategorier";
+import TopTre from "@/components/TopTre";
 import styles from "./page.module.css";
 
 export default function WrappedPage() {
@@ -91,6 +92,12 @@ function buildCards(trip) {
       key: "kategorier",
       theme: "orange",
       content: <TopKategorier trip={trip} total={h.total} />,
+    },
+    {
+      // F13 · Jeres 3 dyreste køb: luppen over bonen fra F11.
+      key: "top3",
+      theme: "lilac",
+      content: <TopTre trip={trip} />,
     },
     ...ordered.map((r) => ({
       key: `role-${r.member.id}`,

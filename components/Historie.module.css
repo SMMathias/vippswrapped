@@ -37,6 +37,12 @@
   color: var(--color-text-primary);
 }
 
+/* lilac: lilla tekst på lys lilla (#483678 på #F1EDFB) ≈ 9:1 */
+.lilac {
+  background: var(--color-bg-accent-subtle);
+  color: var(--color-text-accent);
+}
+
 .dark {
   background: var(--color-bg-accent-strong);
   color: var(--color-text-on-accent);
